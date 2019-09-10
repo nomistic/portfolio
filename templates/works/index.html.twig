@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Works{% endblock %}
+
+{% block body %}
+    <h1>Works</h1>
+
+    {% if works %}
+        <table id="works" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Work Title</th>
+                <th>Client</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for work in works %}
+
+                <tr>
+                    <td> {{ work.title }}</td>
+                    <td> {{ work.getClientId }}</td>
+                    <td>
+                        <a href="/work/{{ work.id }}" class="btn btn-dark">View Detail</a>
+                        <a href="/work/edit/{{ work.id }}" class="btn btn-light">Edit</a>
+                        <a href="#" class="btn btn-danger delete-article" data-id="{{ work.id }}">Delete</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+
+    {% else %}
+        No creations are available.
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}
+

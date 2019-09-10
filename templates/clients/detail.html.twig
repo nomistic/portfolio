@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Client Detail{% endblock %}
+
+{% block body %}
+    <h1>{{ client.name }}</h1>
+    <p>{{ client.getClientLast }}, {{ client.getClientFirst }}</p>
+    <p>
+        {% if client.parent %}
+
+        Parent: {{ client.parent }}
+
+        {% endif %}
+        {% if client.works %}
+        <h3>Works:</h3>
+            {% for work in client.works %}
+            {{ work }} <br>
+
+
+            {% endfor %}
+        {% endif %}
+
+    </p>
+    <hr>
+    <a href="/clients">Back to client menu</a>
+{% endblock %}
+

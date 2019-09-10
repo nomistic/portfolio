@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Clients{% endblock %}
+
+{% block body %}
+    <h1>Clients</h1>
+    <p><a href="/clients/new">Add a Client</a></p>
+
+    {% if clients %}
+        <table id="clients" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for client in clients %}
+
+                <tr>
+                    <td> {{ client.name }}</td>
+                    <td>
+                        <a href="/client/{{ client.id }}" class="btn btn-dark">View Detail</a>
+                        <a href="/client/edit/{{ client.id }}" class="btn btn-light">Edit</a>
+                        <a href="#" class="btn btn-danger delete-client" data-id="{{ client.id }}">Delete</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+
+    {% else %}
+        No clients currently listed.
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}
+

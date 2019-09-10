@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Works{% endblock %}
+
+{% block body %}
+<h1>{{ work.title }}</h1>
+    {% if client %}
+    <h3>Client: {{ client.name }}</h3>
+    {% endif %}
+
+    <p><h4>Description</h4>
+    {{ work.description }}</p>
+    <p><h4>Notes</h4>
+    {{ work.notes }}</p>
+    <hr>
+    <a href="/">Back to menu</a>
+{% endblock %}
+

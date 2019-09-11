@@ -8,10 +8,57 @@
     <h3>Client: {{ client.name }}</h3>
     {% endif %}
 
-    <p><h4>Description</h4>
-    {{ work.description }}</p>
-    <p><h4>Notes</h4>
-    {{ work.notes }}</p>
+    <p>
+    <h4>Description</h4>
+    {{ work.description }}
+    </p>
+    <p>
+    <h4>Notes</h4>
+    {{ work.notes }}
+    </p>
+    <p>Public URL: {{ work.getPubUrl }}</p>
+    <p>Private URL: {{ work.getPrivUrl }}</p>
+
+    <p>
+        Ghost status:
+    {% if work.getGhostInd %}
+        Ghost-written
+    {% else %}
+        Authored
+    {% endif %}
+    </p>
+    <p>
+        Type: {{ work.type }}
+    </p>
+    <p>
+        Net Pay: {{ work.getNetPay }}
+    </p>
+    <p>
+        Hours: {{ work.hours }}
+    </p>
+    <p>
+        Hourly status:
+        {% if work.hourly %}
+            Hourly
+        {% else %}
+            Fixed
+        {% endif %}
+    </p>
+    <p>
+        Format: {{ work.format }}
+    </p>
+    <p>
+        Submitted Date: {{ work.getDateSubmitted ? work.getDateSubmitted|date("m/d/Y") }}
+    </p>
+    <p>
+        Published Date: {{ work.getDatePublished ? work.getDatePublished|date("m/d/Y") }}
+    </p>
+    <p>
+        Platform: {{ work.platform }}
+    </p>
+    <p>
+        Work Type:  {{ work.getWorkType }}
+    </p>
     <hr>
     <a href="/">Back to menu</a>
 {% endblock %}

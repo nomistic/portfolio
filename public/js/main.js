@@ -2,7 +2,7 @@ const works = document.getElementById('works');
 
 if (works) {
     works.addEventListener('click', e => {
-        if (e.target.className === 'btn btn-danger delete-article') {
+        if (e.target.className === 'btn btn-sm btn-danger delete-article') {
         if (confirm('Are you sure?')) {
             const id = e.target.getAttribute('data-id');
 

@@ -14,9 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Work;
 
 
-class ProjectController extends Controller{
+class DashboardController extends Controller{
     /**
-     * @Route("/works", name="work_list")
+     * @Route("/", name="dashboard")
      * @Method("GET")
      */
     public function index()
@@ -24,8 +24,8 @@ class ProjectController extends Controller{
 
         $works = $this->getDoctrine()->getRepository(Work::class)->findAll();
 
-            //return new Response('<html><body>Hello World</body></html>');
-        return $this->render('works/index.html.twig', array(
+        //return new Response('<html><body>Hello World</body></html>');
+        return $this->render('index.html.twig', array(
             'works' => $works
         ));
 
@@ -54,7 +54,7 @@ class ProjectController extends Controller{
         }
 
         return $this->render('works/new.html.twig', array(
-            'form' => $form->createView())
+                'form' => $form->createView())
         );
 
     }

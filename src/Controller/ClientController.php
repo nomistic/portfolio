@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Client;
+use App\Form\NewClientType;
+use App\Form\EditClientType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -40,25 +42,7 @@ class ClientController extends Controller{
     public function newClient(Request $request)
     {
         $client = new Client();
-
-        $form = $this->createFormBuilder($client)
-            ->add('name', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('client_last', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('client_first', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('parent', EntityType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'required' => false,
-                'class' => Client::class,
-                'data' => null
-            ))
-
-
-            ->add('save', SubmitType::class, array(
-                'label' => 'Create',
-                'attr' => array('class' => 'btn btn-primary mt-3')
-            ))
-            ->getForm();
-
+        $form = $this->createForm(NewClientType::class, $client);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
@@ -82,24 +66,10 @@ class ClientController extends Controller{
      */
     public function editClient(Request $request, $id)
     {
-        $client = new Client();
+
         $client = $this->getDoctrine()->getRepository(Client::class)->find($id);
 
-        $form = $this->createFormBuilder($client)
-            ->add('name', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('client_last', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('client_first', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('parent', EntityType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'required' => false,
-                'class' => Client::class
-            ))
-
-            ->add('save', SubmitType::class, array(
-                'label' => 'Update',
-                'attr' => array('class' => 'btn btn-primary mt-3')
-            ))
-            ->getForm();
+        $form = $this->createForm(EditClientType::class, $client);
 
         $form->handleRequest($request);
 

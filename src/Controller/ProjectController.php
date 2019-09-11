@@ -72,14 +72,6 @@ class ProjectController extends Controller{
             ->add('pub_url', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
             ->add('priv_url', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
 
-//            ->add('ghost_ind', ChoiceType::class, array(
-//                    'attr' => array('class' => 'form-control'),
-//                    'choices' => ['Yes' => true, 'No' => false],
-//                    'label' => 'Ghosted'
-//                )
-//
-//            )
-
             ->add('ghost_ind', CheckboxType::class, [
                 'label'    => 'Ghosted  ',
                 'required' => false,
@@ -177,6 +169,66 @@ class ProjectController extends Controller{
                 'required' => false,
                 'attr' => array('class' => 'form-control')
             ))
+
+            ->add('notes', TextareaType::class, array(
+                'required' => false,
+                'attr' => array('class' => 'form-control')
+            ))
+            ->add('pub_url', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
+            ->add('priv_url', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
+
+            ->add('ghost_ind', CheckboxType::class, [
+                'label'    => 'Ghosted  ',
+                'required' => false,
+            ])
+
+            ->add('type', EntityType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'class' => Type::class,
+                'label' => 'Type',
+                'placeholder' => 'Choose a type',
+
+            ))
+
+            ->add('net_pay', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
+            ->add('hourly', ChoiceType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'choices' => ['Yes' => true, 'No' => false],
+                //'label' => 'Ghosted'
+            ))
+            ->add('hours', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
+
+
+            ->add('format', EntityType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'class' => Format::class,
+                //'label' => 'Type',
+                'placeholder' => 'Choose a format',
+
+            ))
+
+            ->add('date_submitted', DateType::class, array(
+                'widget' => 'single_text',
+                'attr' => array('class' => 'form-control'),
+                'required' => false))
+
+            ->add('date_published', DateType::class, array(
+                'widget' => 'single_text',
+                'attr' => array('class' => 'form-control'),
+                'required' => false))
+
+            ->add('platform', EntityType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'class' => Platform::class,
+                //'label' => 'Type',
+                'placeholder' => 'Choose a platform',
+                'required' => false
+
+            ))
+
+            ->add('work_type', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
+
+
             ->add('save', SubmitType::class, array(
                 'label' => 'Update',
                 'attr' => array('class' => 'btn btn-primary mt-3')

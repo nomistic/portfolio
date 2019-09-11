@@ -16,8 +16,8 @@
     <h4>Notes</h4>
     {{ work.notes }}
     </p>
-    <p>Public URL: {{ work.getPubUrl }}</p>
-    <p>Private URL: {{ work.getPrivUrl }}</p>
+    <p>Public URL:  <a href="{{ work.getPubUrl }}" target="_blank">{{ work.getPubUrl }}</a></p>
+    <p>Private URL: <a href="{{ work.getPrivUrl }}" target="_blank">{{ work.getPrivUrl }}</a></p>
 
     <p>
         Ghost status:

@@ -14,7 +14,7 @@
         {% if client.works %}
         <h3>Works:</h3>
             {% for work in client.works %}
-            {{ work }} <br>
+            <a href="/work/{{ work.id }}">{{ work }}</a> <br>
 
 
             {% endfor %}

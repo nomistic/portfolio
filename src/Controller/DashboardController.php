@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Repository\WorkRepository;
 use App\Form\NewWorkType;
 use App\Form\EditWorkType;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,98 +32,22 @@ class DashboardController extends Controller{
 
     }
 
-
-
     /**
-     * @Route("/work/new", name="new_work")
-     * @Method({"GET", "POST"})
+     * @Route("/reports", name="reports")
+     * @Method("GET")
      */
-    public function newWork(Request $request)
+    public function showWorkTotal()
     {
-        $work = new Work();
-        $form = $this->createForm(NewWorkType::class, $work);
+        $works = $this->getDoctrine()->getRepository(Work::class)->totalByClient();
 
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $work = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($work);
-            $em->flush();
-
-            return $this->redirectToRoute('work_list');
-        }
-
-        return $this->render('works/new.html.twig', array(
-                'form' => $form->createView())
-        );
-
-    }
-
-    /**
-     * @Route("/work/edit/{id}", name="edit_work")
-     * @Method({"GET", "POST"})
-     */
-    public function editWork(Request $request, $id)
-    {
-        //$work = new Work();
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
-
-        $form = $this->createForm(EditWorkType::class, $work);
-
-        $form->handleRequest($request);
-
-
-
-        if($form->isSubmitted() && $form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-
-            $em->flush();
-
-            return $this->redirectToRoute('work_list');
-        }
-
-        return $this->render('works/edit.html.twig', array(
-                'form' => $form->createView())
-        );
-
-    }
-
-
-
-    /**
-     * @Route("/work/delete/{id}")
-     * @Method({"DELETE"})
-     */
-    public function delete(Request $request, $id)
-    {
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($work);
-        $em->flush();
-
-        $response = new Response();
-        $response->send();
-
-    }
-
-    /**
-     * @Route("/work/{id}", name="work_detail")
-     */
-    public function workDetail($id)
-    {
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
-        $client_id = $work->getClientId();
-        $client = $this->getDoctrine()->getRepository(Client::class)->findOneBy(array('id'=> $client_id));
-
-        return $this->render('works/detail.html.twig', array(
-            'work' => $work,
-            'client' => $client
+        return $this->render('reports/index.html.twig', array(
+            'works' => $works
         ));
 
+
     }
+
+
 
 
 }

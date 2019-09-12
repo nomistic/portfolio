@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reports{% endblock %}
+
+{% block body %}
+    <h1>Total per Client</h1>
+
+
+
+
+    {% if works %}
+        <table id="works" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Client</th>
+                <th>Amount</th>
+                <th>Jobs</th>
+                <th>Avg/Job</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for work in works %}
+
+                <tr>
+                    <td> {{ work.name }}</td>
+                    <td>{{ work.amount }}</td>
+                    <td>{{ work.jobs }}</td>
+                    <td>{{ work.average_pay }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+
+    {% else %}
+        No creations are available.
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}
+

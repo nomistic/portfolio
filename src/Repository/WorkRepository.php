@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Client;
 use App\Entity\Work;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -18,6 +19,26 @@ class WorkRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Work::class);
     }
+
+
+
+    public function totalByClient() {
+        $em = $this->getEntityManager();
+        //$qb = $em->createQueryBuilder();
+
+        $works = $em->createQuery(
+            'select c.name, sum(w.net_pay) AS amount, count(w.id) as jobs, sum(w.net_pay)/count(w.id) as average_pay
+            FROM App\Entity\Work w
+            LEFT JOIN w.client_id c
+            GROUP BY c.name
+            ORDER BY amount DESC, jobs DESC
+            '
+        );
+
+        return $works->execute();
+
+    }
+
 
     // /**
     //  * @return Work[] Returns an array of Work objects

@@ -15,6 +15,7 @@
                 <th>Client</th>
                 <th>Amount</th>
                 <th>Jobs</th>
+
                 <th>Avg/Job</th>
             </tr>
             </thead>
@@ -25,7 +26,8 @@
                     <td> {{ work.name }}</td>
                     <td>{{ work.amount }}</td>
                     <td>{{ work.jobs }}</td>
-                    <td>{{ work.average_pay }}</td>
+
+                    <td>{{ (work.amount / work.jobs) | round(2,'common') }}</td>
 
                 </tr>
             {% endfor %}

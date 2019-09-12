@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Client;
 use App\Form\NewClientType;
-use App\Form\EditClientType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -66,10 +65,25 @@ class ClientController extends Controller{
      */
     public function editClient(Request $request, $id)
     {
-
+        $client = new Client();
         $client = $this->getDoctrine()->getRepository(Client::class)->find($id);
 
-        $form = $this->createForm(EditClientType::class, $client);
+        $form = $this->createForm(NewClientType::class, $client);
+        $form = $this->createFormBuilder($client)
+            ->add('name', TextType::class, array('attr' => array('class' => 'form-control')))
+            ->add('client_last', TextType::class, array('attr' => array('class' => 'form-control')))
+            ->add('client_first', TextType::class, array('attr' => array('class' => 'form-control')))
+            ->add('parent', EntityType::class, array(
+                'attr' => array('class' => 'form-control'),
+                'required' => false,
+                'class' => Client::class
+            ))
+
+            ->add('save', SubmitType::class, array(
+                'label' => 'Update',
+                'attr' => array('class' => 'btn btn-primary mt-3')
+            ))
+            ->getForm();
 
         $form->handleRequest($request);
 
@@ -113,29 +127,15 @@ class ClientController extends Controller{
     public function clientDetail($id)
     {
         $client = $this->getDoctrine()->getRepository(Client::class)->find($id);
+        
+        $parents = $this->getDoctrine()->getRepository(Client::class)->findBy(array('parent' => $id));
 
         return $this->render('clients/detail.html.twig', array(
-            'client' => $client
+            'client' => $client,
+            'parents' => $parents
         ));
 
     }
 
 
-//    /**
-//     * @Route("/work/save")
-//     * @Method("GET")
-//     */
-//
-//    public function save()
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $work = new Work();
-//        $work->setTitle('article 2');
-//        $work->setDescription('This is the second article');
-//
-//        $em->persist($work);
-//        $em->flush();
-//
-//        return new Response('saved article with the id of'. $work->getId());
-//    }
 }

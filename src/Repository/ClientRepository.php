@@ -19,6 +19,30 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
+
+
+    public function hasParent($id) {
+        $em = $this->getEntityManager();
+        //$qb = $em->createQueryBuilder();
+
+        $works = $em->createQuery(
+            'SELECT c.*
+            FROM App\Entity\Client c
+            HAVING c.parent = :val 
+            GROUP BY c.name
+            ORDER BY name ASC
+            '
+        )->setParameter('id', $id);;
+
+        return $works->execute();
+
+    }
+
+
+
+
+
+
     // /**
     //  * @return Client[] Returns an array of Client objects
     //  */

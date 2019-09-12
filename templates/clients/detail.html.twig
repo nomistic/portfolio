@@ -11,6 +11,17 @@
         Parent: {{ client.parent }}
 
         {% endif %}
+
+
+
+    {% if parents %}
+        <h3>Child Clients</h3>
+        {% for parent in parents %}
+        <a href="{{ parent.id }}">{{ parent }}</a>  <br/>
+        {% endfor %}
+
+    {% endif %}
+
         {% if client.works %}
         <h3>Works:</h3>
             {% for work in client.works %}

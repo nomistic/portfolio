@@ -27,6 +27,13 @@
         Authored
     {% endif %}
     </p>
+    <p>Subjects:
+    {% if work.subjects %}
+    {% for subject in work.subjects %}
+        {{ subject }} <br>
+    {% endfor %}
+    {% endif %}
+    </p>
     <p>
         Type: {{ work.type }}
     </p>

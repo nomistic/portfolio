@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Client;
 use App\Entity\Format;
 use App\Entity\Type;
+use App\Entity\Subject;
 use App\Entity\Platform;
 //use Doctrine\DBAL\Types\DateType;
 use Symfony\Component\Form\AbstractType;
@@ -54,6 +55,15 @@ class EditWorkType extends AbstractType
                 'required' => false,
                 'attr' => array('class' => 'form-control')
             ))
+            ->add('subjects',EntityType::class, array(
+                'required' => false,
+                'attr' => array('class' => 'form-control'),
+                'class' => Subject::class,
+                'multiple' => true,
+                'expanded' => true,
+            ))
+
+
             ->add('pub_url', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
             ->add('priv_url', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
 

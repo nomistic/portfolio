@@ -5,30 +5,63 @@
 {% block body %}
     <h1>{{ client.name }}</h1>
     <p>{{ client.getClientLast }}, {{ client.getClientFirst }}</p>
-    <p>
+    <div>
         {% if client.parent %}
 
-        Parent: {{ client.parent }}
+        Parent: <a href="{{ client.parent.id }}">{{ client.parent }}</a>
 
         {% endif %}
+    </div>
 
 
 
     {% if parents %}
         <h3>Child Clients</h3>
-        {% for parent in parents %}
-        <a href="{{ parent.id }}">{{ parent }}</a>  <br/>
-        {% endfor %}
 
+<h3>Works</h3>
+<table id="children" class="table table-striped">
+    <thead>
+    <tr>
+        <th>Client</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for parent in parents %}
+        <tr>
+            <td><a href="{{ parent.id }}">{{ parent }}</a></td>
+
+        </tr>
+
+        {% endfor %}
+    </tbody>
+    </table>
     {% endif %}
 
         {% if client.works %}
-        <h3>Works:</h3>
+        <h3>Works</h3>
+            <table id="works" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                </tr>
+                </thead>
+                <tbody>
+
+
             {% for work in client.works %}
-            <a href="/work/{{ work.id }}">{{ work }}</a> <br>
+                <tr>
+                    <td><a href="/work/{{ work.id }}">{{ work }}</a></td>
+
+                </tr>
+
+
 
 
             {% endfor %}
+                </tbody>
+
+            </table>
+
         {% endif %}
 
     </p>

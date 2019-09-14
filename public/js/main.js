@@ -30,6 +30,22 @@ if (clients) {
 });
 }
 
+const subjects = document.getElementById('subjects');
+
+if (subjects) {
+    subjects.addEventListener('click', e => {
+        if (e.target.className === 'btn btn-danger delete-subject') {
+        if (confirm('Are you sure?')) {
+            const id = e.target.getAttribute('data-id');
+
+            fetch(`/subject/delete/${id}`, {
+                method: 'DELETE'
+            }).then(res => window.location.reload());
+        }
+    }
+});
+}
+
 
 
 

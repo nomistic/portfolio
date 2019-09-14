@@ -60,7 +60,7 @@ class EditWorkType extends AbstractType
                 'attr' => array('class' => 'form-control'),
                 'class' => Subject::class,
                 'multiple' => true,
-                'expanded' => true,
+                //'expanded' => true,
             ))
 
 

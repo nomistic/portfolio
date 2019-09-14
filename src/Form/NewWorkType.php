@@ -60,7 +60,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
             'attr' => array('class' => 'form-control'),
             'class' => Subject::class,
             'multiple' => true,
-            'expanded' => true,
+            //'expanded' => false,
         ))
 
         ->add('pub_url', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))

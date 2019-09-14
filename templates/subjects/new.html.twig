@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Subject{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <hr>
+    <a href="/subjects">Back to subject menu</a>
+{% endblock %}
+

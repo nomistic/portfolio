@@ -1,6 +1,5 @@
 ## Portfolio Manager
 ****
+a simple tool for managing a personal writing/developing portfolio
 
-Personal project space - a tool for keeping a record of a freelance portfolio
-
-Mostly using this as a workbench right now
+[ a work in progress ]

@@ -3,9 +3,10 @@
 {% block title %}Portfolio Works{% endblock %}
 
 {% block body %}
-<h1>{{ work.title }}</h1>
+    <div class="col-lg-8">
+<h3>{{ work.title }}</h3>
     {% if client %}
-    <h3>Client: {{ client.name }}</h3>
+    <h4>Client: <a href="/client/{{ client.id }}">{{ client.name }}</a> </h4>
     {% endif %}
 
     <p>
@@ -16,56 +17,153 @@
     <h4>Notes</h4>
     {{ work.notes }}
     </p>
-    <p>Public URL:  <a href="{{ work.getPubUrl }}" target="_blank">{{ work.getPubUrl }}</a></p>
-    <p>Private URL: <a href="{{ work.getPrivUrl }}" target="_blank">{{ work.getPrivUrl }}</a></p>
 
-    <p>
-        Ghost status:
-    {% if work.getGhostInd %}
-        Ghost-written
-    {% else %}
-        Authored
-    {% endif %}
-    </p>
-    <p>Subjects:
-    {% if work.subjects %}
-    {% for subject in work.subjects %}
-        {{ subject }} <br>
-    {% endfor %}
-    {% endif %}
-    </p>
-    <p>
-        Type: {{ work.type }}
-    </p>
-    <p>
-        Net Pay: {{ work.getNetPay }}
-    </p>
-    <p>
-        Hours: {{ work.hours }}
-    </p>
-    <p>
-        Hourly status:
-        {% if work.hourly %}
-            Hourly
-        {% else %}
-            Fixed
-        {% endif %}
-    </p>
-    <p>
-        Format: {{ work.format }}
-    </p>
-    <p>
-        Submitted Date: {{ work.getDateSubmitted ? work.getDateSubmitted|date("m/d/Y") }}
-    </p>
-    <p>
-        Published Date: {{ work.getDatePublished ? work.getDatePublished|date("m/d/Y") }}
-    </p>
-    <p>
-        Platform: {{ work.platform }}
-    </p>
-    <p>
-        Work Type:  {{ work.getWorkType }}
-    </p>
+
+    <table class="table  table-bordered">
+        <tbody>
+        <tr>
+            <td>
+                Public URL:
+            </td>
+            <td>
+                <a href="{{ work.getPubUrl }}" target="_blank">{{ work.getPubUrl }}</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Private URL:
+            </td>
+            <td>
+                <a href="{{ work.getPrivUrl }}" target="_blank">{{ work.getPrivUrl }}</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Ghost status:
+            </td>
+            <td>
+                {% if work.getGhostInd %}
+                    Ghost-written
+                {% else %}
+                    Authored
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p>Subjects:
+
+                </p>
+            </td>
+            <td>
+                {% if work.subjects %}
+                    {% for subject in work.subjects %}
+                        <a href="/work/subject/{{ subject.id }}">{{ subject }}</a> <br>
+                    {% endfor %}
+                {% endif %}
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Type:
+
+            </td>
+            <td>
+                {{ work.type }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Net Pay:
+
+            </td>
+            <td>
+                {{ work.getNetPay }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Hours:
+            </td>
+            <td>
+                {{ work.hours }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Hourly status:
+
+
+            </td>
+            <td>
+                {% if work.hourly %}
+                    Hourly
+                {% else %}
+                    Fixed
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Format:
+
+            </td>
+            <td>
+                {{ work.format }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Submitted Date:
+
+            </td>
+            <td>
+                {{ work.getDateSubmitted ? work.getDateSubmitted|date("m/d/Y") }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Published Date:
+
+            </td>
+            <td>
+                {{ work.getDatePublished ? work.getDatePublished|date("m/d/Y") }}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                Platform:
+
+            </td>
+            <td>
+                {{ work.platform }}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                Work Type:
+
+            </td>
+            <td>
+                {{ work.getWorkType }}
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
     <hr>
     <a href="/">Back to menu</a>
 {% endblock %}

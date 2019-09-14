@@ -19,6 +19,22 @@ class SubjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Subject::class);
     }
 
+
+    public function workSubject($id) {
+        $em = $this->getEntityManager();
+
+        $works = $em->createQuery(
+            'SELECT w
+            FROM App\Entity\Work w
+            JOIN w.subjects s
+            WHERE s.id = :id
+            '
+        )->setParameter('id', $id);;
+
+        return $works->execute();
+
+    }
+
     // /**
     //  * @return Subject[] Returns an array of Subject objects
     //  */

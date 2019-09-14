@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Subject;
+use App\Entity\Work;
 use App\Form\NewClientType;
 use App\Form\NewSubjectType;
 use App\Form\EditSubjectType;
@@ -88,6 +89,25 @@ class SubjectController extends Controller{
 
     }
 
+    /**
+     * @Route("/work/subject/{id}", name="work_subs")
+     * @Method({"GET", "POST"})
+     */
+    public function WorkSubject($id)
+    {
+        $subject =$this->getDoctrine()->getRepository(Subject::class)->find($id);
+
+        $works = $this->getDoctrine()->getRepository(Subject::class)->workSubject($id);
+        //$works = $this->getDoctrine()->getRepository(Work::class)->findBy(array('subjects' => $subject));
+
+        return $this->render('works/subject.html.twig', array(
+            'subject' => $subject,
+            'works' => $works
+        ));
+
+
+    }
+
 
 
     /**
@@ -107,6 +127,6 @@ class SubjectController extends Controller{
 
     }
 
-    
+
 
 }

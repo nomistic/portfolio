@@ -18,7 +18,7 @@
             {% for subject in subjects %}
 
                 <tr>
-                    <td> {{ subject.name }}</td>
+                    <td> <a href="/work/subject/{{ subject.id }}">{{ subject.name }}</a></td>
                     <td>
                         <a href="/subject/edit/{{ subject.id }}" class="btn btn-light">Edit</a>
                         <a href="#" class="btn btn-danger delete-subject" data-id="{{ subject.id }}">Delete</a>

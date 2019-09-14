@@ -80,7 +80,7 @@ class ProjectController extends Controller{
 
             $em->flush();
 
-            return $this->redirectToRoute('work_list');
+            return $this->redirectToRoute('work_detail', array('id' => $id) );
         }
 
         return $this->render('works/edit.html.twig', array(

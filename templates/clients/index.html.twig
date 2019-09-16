@@ -18,9 +18,9 @@
             {% for client in clients %}
 
                 <tr>
-                    <td> {{ client.name }}</td>
+                    <td> <a href="/client/{{ client.id }}">{{ client.name }}</a></td>
                     <td>
-                        <a href="/client/{{ client.id }}" class="btn btn-dark">View Detail</a>
+                        <!--a href="/client/{{ client.id }}" class="btn btn-dark">View Detail</a-->
                         <a href="/client/edit/{{ client.id }}" class="btn btn-light">Edit</a>
                         <a href="#" class="btn btn-danger delete-client" data-id="{{ client.id }}">Delete</a>
                     </td>

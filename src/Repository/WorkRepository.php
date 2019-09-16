@@ -39,6 +39,39 @@ class WorkRepository extends ServiceEntityRepository
 
     }
 
+    public function TopTotalByClient() {
+        $em = $this->getEntityManager();
+        //$qb = $em->createQueryBuilder();
+
+        $works = $em->createQuery(
+            'select c.name, sum(w.net_pay) AS amount, count(w.id) as jobs, sum(w.net_pay)/count(w.id) as average_pay
+            FROM App\Entity\Work w
+            LEFT JOIN w.client_id c
+            GROUP BY c.name
+            ORDER BY amount DESC, jobs DESC
+            '
+        )->setMaxResults(6);
+
+        return $works->execute();
+
+    }
+    public function MostJobsByClient() {
+        $em = $this->getEntityManager();
+        //$qb = $em->createQueryBuilder();
+
+        $works = $em->createQuery(
+            'select c.name, sum(w.net_pay) AS amount, count(w.id) as jobs, sum(w.net_pay)/count(w.id) as average_pay
+            FROM App\Entity\Work w
+            LEFT JOIN w.client_id c
+            GROUP BY c.name
+            ORDER BY jobs DESC
+            '
+        )->setMaxResults(6);
+
+        return $works->execute();
+
+    }
+
 
     // /**
     //  * @return Work[] Returns an array of Work objects

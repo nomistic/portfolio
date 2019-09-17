@@ -7,6 +7,7 @@ use App\Entity\Format;
 use App\Entity\Subject;
 use App\Entity\Type;
 use App\Entity\Platform;
+use App\Repository\SubjectRepository;
 //use Doctrine\DBAL\Types\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -59,6 +60,10 @@ public function buildForm(FormBuilderInterface $builder, array $options)
             'required' => false,
             'attr' => array('class' => 'form-control'),
             'class' => Subject::class,
+            'query_builder' => function(SubjectRepository $er) {
+                return $er->createQueryBuilder('s')
+                    ->orderBy('s.name', 'ASC');
+            },
             'multiple' => true,
             //'expanded' => false,
         ))

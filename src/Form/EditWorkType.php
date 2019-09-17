@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use App\Repository\SubjectRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,6 +60,10 @@ class EditWorkType extends AbstractType
                 'required' => false,
                 'attr' => array('class' => 'form-control'),
                 'class' => Subject::class,
+                'query_builder' => function(SubjectRepository $er) {
+                    return $er->createQueryBuilder('s')
+                        ->orderBy('s.name', 'ASC');
+                },
                 'multiple' => true,
                 //'expanded' => true,
             ))

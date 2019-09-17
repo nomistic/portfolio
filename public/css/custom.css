@@ -1,0 +1,3 @@
+select#new_work_subjects.form-control, select#edit_work_subjects.form-control{
+    height: 300px;
+}

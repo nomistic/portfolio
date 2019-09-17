@@ -8,6 +8,7 @@ use App\Entity\Subject;
 use App\Entity\Type;
 use App\Entity\Platform;
 use App\Repository\SubjectRepository;
+use App\Repository\ClientRepository;
 //use Doctrine\DBAL\Types\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -41,6 +42,10 @@ public function buildForm(FormBuilderInterface $builder, array $options)
         ->add('client_id', EntityType::class, array(
                 'attr' => array('class' => 'form-control'),
                 'class' => Client::class,
+                'query_builder' => function(ClientRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
                 'label' => 'Client',
                 'placeholder' => 'Choose a client',
 

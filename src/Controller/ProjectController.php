@@ -8,11 +8,15 @@ use App\Form\NewWorkType;
 use App\Form\EditWorkType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Work;
-
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class ProjectController extends Controller{
     /**
@@ -31,6 +35,28 @@ class ProjectController extends Controller{
 
     }
 
+
+    //API output tool
+
+    /**
+     * @Route("/output/work.json", name="json_output")
+     * @Method("GET")
+     */
+    public function outputWork()
+    {
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+
+
+        $work = $this->getDoctrine()->getRepository(Work::class)->authoredWorks();
+
+        $jsonContent = $serializer->serialize($work, 'json');
+
+        return new Response($jsonContent, 200, ['Content-Type' => 'application/json']);
+
+    }
 
 
     /**
@@ -123,6 +149,7 @@ class ProjectController extends Controller{
         ));
 
     }
+
 
 
 }

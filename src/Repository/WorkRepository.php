@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 /**
  * @method Work|null find($id, $lockMode = null, $lockVersion = null)
  * @method Work|null findOneBy(array $criteria, array $orderBy = null)
- * @method Work[]    findAll()
+ * method Work[]    findAll()
  * @method Work[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class WorkRepository extends ServiceEntityRepository
@@ -20,7 +20,10 @@ class WorkRepository extends ServiceEntityRepository
         parent::__construct($registry, Work::class);
     }
 
-
+    public function findAll()
+    {
+        return $this->findBy(array(), array('title' => 'ASC'));
+    }
 
     public function totalByClient() {
         $em = $this->getEntityManager();
@@ -69,6 +72,18 @@ class WorkRepository extends ServiceEntityRepository
         )->setMaxResults(6);
 
         return $works->execute();
+
+    }
+
+    public function authoredWorks()
+    {
+        $em = $this->getEntityManager();
+        $pubs =  $em->createQuery('select w.title, w.pub_url, w.description
+        FROM App\Entity\Work w 
+        WHERE w.ghost_ind = false
+        ORDER BY  w.title ASC');
+
+        return $pubs->execute();
 
     }
 

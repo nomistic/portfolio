@@ -26,8 +26,11 @@ class DashboardController extends Controller{
        // $works = $this->getDoctrine()->getRepository(Work::class)->findAll();
         $works = $this->getDoctrine()->getRepository(Work::class)->TopTotalByClient();
         $jobs = $this->getDoctrine()->getRepository(Work::class)->MostJobsByClient();
+        $earnings = $this->getDoctrine()->getRepository(Work::class)->monthlyEarnings();
+
         $clients = [];
         $amounts = [];
+
 
         foreach ($works as $work) {
             $client = $work['name'];
@@ -47,6 +50,15 @@ class DashboardController extends Controller{
             array_push($j_clients, $j_client);
         }
 
+        $monthly = [];
+        $monthly_sum = [];
+        foreach ($earnings as $earn) {
+            $month = $earn['month_year'];
+            $pay   = $earn['pay'];
+            array_push($monthly, $month);
+            array_push($monthly_sum, $pay);
+        }
+
 
 
         //return new Response('<html><body>Hello World</body></html>');
@@ -55,7 +67,9 @@ class DashboardController extends Controller{
             'clientss' => $clients,
             'amounts' => $amounts,
             'j_clients' => $j_clients,
-            'j_jobs' => $j_jobs
+            'j_jobs' => $j_jobs,
+            'monthly' => $monthly,
+            'monthly_sum' => $monthly_sum
         ));
 
     }

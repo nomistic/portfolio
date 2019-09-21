@@ -17,7 +17,13 @@
         <h4>Top clients/# of Jobs</h4>
         <canvas id="MostJobsChart"></canvas>
     </div>
-</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Earnings over Time</h4>
+            <canvas id="EarningsChart"></canvas>
+        </div>
+    </div>
 
 
 {% endblock %}
@@ -115,6 +121,35 @@
             }
         }
     });
+
+    var ctxL = document.getElementById("EarningsChart").getContext('2d');
+
+    var monthly = {{ monthly|json_encode|raw }};
+    var monthly_sum = {{ monthly_sum|json_encode|raw }};
+
+    var myLineChart = new Chart(ctxL, {
+        type: 'line',
+        data: {
+            labels: monthly,
+            //labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "Earnings",
+                data: monthly_sum,
+                //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
+                backgroundColor: [
+                    'rgba(105, 0, 132, .2)',
+                ],
+                borderColor: [
+                    'rgba(200, 99, 132, .7)',
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
 </script>
 
 {% endblock %}

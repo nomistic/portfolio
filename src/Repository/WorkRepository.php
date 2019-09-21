@@ -87,6 +87,34 @@ class WorkRepository extends ServiceEntityRepository
         return $pubs->execute();
 
     }
+// using raw SQL for monthname and year functions
+
+    public function monthlyEarnings()
+    {
+        $em = $this->getEntityManager();
+        $ern = ("SELECT
+                        YEAR(date_submitted) AS year_sub,
+                        CONCAT(
+                            YEAR(date_submitted),
+                            ' ',
+                            MONTHNAME(date_submitted)
+                        ) AS month_year,
+                        SUM(net_pay) AS pay
+                    FROM work 
+                    WHERE net_pay is not NULL 
+                    GROUP BY
+                        year_sub,
+                        month_year
+                    ORDER BY
+                        year_sub,
+                        MONTH(date_submitted)");
+
+        $stmt = $em->getConnection()->prepare($ern);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+    }
+
 
 
     // /**

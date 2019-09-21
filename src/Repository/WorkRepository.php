@@ -78,8 +78,9 @@ class WorkRepository extends ServiceEntityRepository
     public function authoredWorks()
     {
         $em = $this->getEntityManager();
-        $pubs =  $em->createQuery('select w.title, w.pub_url, w.description
+        $pubs =  $em->createQuery('select w.title, w.pub_url, w.description, t.name as type
         FROM App\Entity\Work w 
+        JOIN w.type t
         WHERE w.ghost_ind = false
         ORDER BY  w.title ASC');
 

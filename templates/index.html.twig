@@ -3,8 +3,8 @@
 {% block title %}Portfolio{% endblock %}
 
 {% block body %}
-    <div class="card-deck">
-        <div class="card">
+    <div class="card-deck" id="list_sorting">
+        <div class="card ui-state-default">
             <div class="card text">
     <h3><a href="works">Works</a></h3>
     <h3><a href="clients">Clients</a></h3>
@@ -12,11 +12,11 @@
     <h3><a href="reports">Reports</a></h3>
         </div>
         </div>
-    <div class="card">
+    <div class="card ui-state-default">
         <h4>Top clients/pay</h4>
         <canvas id="TopClientsChart"></canvas>
     </div>
-    <div class="card">
+    <div class="card ui-state-default">
         <h4>Top clients/# of Jobs</h4>
         <canvas id="MostJobsChart"></canvas>
     </div>
@@ -25,13 +25,16 @@
 
     </div>
     <p></p>
-    <div class="card">
+    <div class="row card-deck">
+    <div class="col-md-4 "></div>
+
+    <div class="card col-md-8 ui-state-default">
         <div class=earning">
             <h4>Earnings over Time</h4>
             <canvas id="EarningsChart"></canvas>
         </div>
     </div>
-
+    </div>
 
 {% endblock %}
 {% block javascripts %}
@@ -43,6 +46,14 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $("#list_sorting").sortable();
+            $("#list_sorting").disableSelection();
+        } );
+    </script>
 <script>
 
     var ctx = document.getElementById("TopClientsChart").getContext('2d');

@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Client;
+use App\Entity\Work;
 use App\Form\NewClientType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -24,6 +25,7 @@ class ClientController extends Controller{
     {
 
         $clients = $this->getDoctrine()->getRepository(Client::class)->findAll();
+
 
         //return new Response('<html><body>Hello World</body></html>');
         return $this->render('clients/index.html.twig', array(
@@ -129,10 +131,24 @@ class ClientController extends Controller{
         $client = $this->getDoctrine()->getRepository(Client::class)->find($id);
         
         $parents = $this->getDoctrine()->getRepository(Client::class)->findBy(array('parent' => $id));
+        $earnings = $this->getDoctrine()->getRepository(Work::class)->clientMonthlyEarnings($id);
+
+
+        $monthly = [];
+        $monthly_sum = [];
+        foreach ($earnings as $earn) {
+            $month = $earn['month_year'];
+            $pay = $earn['pay'];
+            array_push($monthly, $month);
+            array_push($monthly_sum, $pay);
+        }
+
 
         return $this->render('clients/detail.html.twig', array(
             'client' => $client,
-            'parents' => $parents
+            'parents' => $parents,
+            'monthly' => $monthly,
+            'monthly_sum' => $monthly_sum
         ));
 
     }

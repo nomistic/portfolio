@@ -3,7 +3,9 @@
 {% block title %}Client Detail{% endblock %}
 
 {% block body %}
-    <h1>{{ client.name }}</h1>
+    <div class="row">
+    <div class="card col-md-3 ui-state-default">
+    <h3>{{ client.name }}</h3>
     <p>{{ client.getClientLast }}, {{ client.getClientFirst }}</p>
     <div>
         {% if client.parent %}
@@ -36,7 +38,14 @@
     </tbody>
     </table>
     {% endif %}
-
+    </div>
+    <div class="card col-md-8 ui-state-default">
+        <div class=earning">
+            <h4>Earnings over Time</h4>
+            <canvas id="EarningsChart"></canvas>
+        </div>
+    </div>
+    </div>
         {% if client.works %}
         <h3>Works</h3>
             <table id="works" class="table table-striped">
@@ -68,4 +77,48 @@
     <hr>
     <a href="/clients">Back to client menu</a>
 {% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+    <script>
+        var ctxL = document.getElementById("EarningsChart").getContext('2d');
 
+        var monthly = {{ monthly|json_encode|raw }};
+        var monthly_sum = {{ monthly_sum|json_encode|raw }};
+
+        var myLineChart = new Chart(ctxL, {
+            type: 'line',
+            data: {
+                labels: monthly,
+                //labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Earnings",
+                    data: monthly_sum,
+                    //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
+                    backgroundColor: [
+                        'rgba(105, 0, 132, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(200, 99, 132, .7)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+
+
+
+
+    </script>
+
+
+{% endblock %}

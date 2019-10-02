@@ -58,6 +58,27 @@ class WorkRepository extends ServiceEntityRepository
         return $works->execute();
 
     }
+
+
+    public function clientTotal($id) {
+        $em = $this->getEntityManager();
+        //$qb = $em->createQueryBuilder();
+
+        $works = $em->createQuery(
+            'select sum(w.net_pay)
+            FROM App\Entity\Work w
+            WHERE w.client_id = ?1
+            ')->setParameter(1, $id);
+        $works->getSingleScalarResult();
+
+        return $works->execute();
+
+    }
+
+
+
+
+
     public function MostJobsByClient() {
         $em = $this->getEntityManager();
         //$qb = $em->createQueryBuilder();
@@ -142,32 +163,4 @@ class WorkRepository extends ServiceEntityRepository
 
 
 
-    // /**
-    //  * @return Work[] Returns an array of Work objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Work
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

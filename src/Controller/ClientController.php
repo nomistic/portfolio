@@ -132,6 +132,8 @@ class ClientController extends Controller{
         
         $parents = $this->getDoctrine()->getRepository(Client::class)->findBy(array('parent' => $id));
         $earnings = $this->getDoctrine()->getRepository(Work::class)->clientMonthlyEarnings($id);
+        $total = $this->getDoctrine()->getRepository(Work::class)->clientTotal($id);
+
 
 
         $monthly = [];
@@ -148,7 +150,8 @@ class ClientController extends Controller{
             'client' => $client,
             'parents' => $parents,
             'monthly' => $monthly,
-            'monthly_sum' => $monthly_sum
+            'monthly_sum' => $monthly_sum,
+            'total'  => $total
         ));
 
     }

@@ -21,6 +21,7 @@
         <h3>Child Clients</h3>
 
 
+
 <table id="children" class="table table-striped">
     <thead>
     <tr>
@@ -42,8 +43,13 @@
     <div class="card col-md-8 ui-state-default">
         <div class=earning">
             <h4>Earnings over Time</h4>
-            Lifetime earnings: {{ total }}
+            {% if parents %} Lifetime earnings all clients:  {{ child }}  {% else %} Lifetime earnings: {{ total }} {% endif %}<br>
+            {% if parents %}
+
+            <canvas id="ChildEarningsChart"></canvas>
+            {% else %}
             <canvas id="EarningsChart"></canvas>
+            {% endif %}
         </div>
     </div>
     </div>
@@ -114,12 +120,40 @@
                 responsive: true
             }
         });
+        </script>
+
+        <script>
+        var ctxC = document.getElementById("ChildEarningsChart").getContext('2d');
+
+        var child_monthly = {{ child_monthly|json_encode|raw }};
+        var child_monthly_sum = {{ child_monthly_sum|json_encode|raw }};
+
+        var myLineChartC = new Chart(ctxC, {
+            type: 'line',
+            data: {
+                labels: child_monthly,
+                //labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Earnings",
+                    data: child_monthly_sum,
+                    //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
+                    backgroundColor: [
+                        'rgba(105, 0, 132, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(200, 99, 132, .7)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
     </script>
 
 
-
-
-    </script>
 
 
 {% endblock %}

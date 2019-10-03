@@ -75,6 +75,36 @@ class WorkRepository extends ServiceEntityRepository
 
     }
 
+    public function childTotal($id) {
+        $em = $this->getEntityManager();
+//        $ern = ("SELECT
+//                        SUM(net_pay)
+//                    FROM WORK
+//                    WHERE
+//                        client_id_id IN (
+//                        SELECT
+//                            id
+//                        FROM
+//                            client
+//                        WHERE
+//                            parent_id = ?)");
+//
+//        $stmt = $em->getConnection()->prepare($ern);
+//        $stmt->bindValue(1, $id);
+//        $stmt->execute();
+//        return $stmt->fetch();
+        $works = $em->createQuery(
+            'select sum(w.net_pay)
+            FROM App\Entity\Work w
+            LEFT JOIN w.client_id c 
+            WHERE c.parent = ?1
+            ')->setParameter(1, $id);
+        $works->getSingleScalarResult();
+
+        return $works->execute();
+
+    }
+
 
 
 
@@ -135,6 +165,7 @@ class WorkRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
 
     }
+
     public function clientMonthlyEarnings($id)
     {
         $em = $this->getEntityManager();
@@ -154,6 +185,39 @@ class WorkRepository extends ServiceEntityRepository
                     ORDER BY
                         year_sub,
                         MONTH(date_submitted)");
+
+        $stmt = $em->getConnection()->prepare($ern);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetchAll();
+
+    }
+
+    public function childMonthlyEarnings($id)
+    {
+        $em = $this->getEntityManager();
+        $ern = ("SELECT
+                    YEAR(date_submitted) AS year_sub,
+                    CONCAT(
+                        YEAR(date_submitted),
+                        ' ',
+                        MONTHNAME(date_submitted)
+                    ) AS month_year,
+                    SUM(net_pay) AS pay
+                FROM WORK
+                WHERE
+                    net_pay IS NOT NULL AND client_id_id IN(
+                    SELECT
+                        id
+                    FROM CLIENT
+                WHERE
+                    parent_id = :id
+                )
+                GROUP BY
+                    year_sub,
+                    month_year
+                ORDER BY
+                    year_sub,
+                    MONTH(date_submitted)");
 
         $stmt = $em->getConnection()->prepare($ern);
         $stmt->execute(['id' => $id]);

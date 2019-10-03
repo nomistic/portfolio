@@ -132,17 +132,29 @@ class ClientController extends Controller{
         
         $parents = $this->getDoctrine()->getRepository(Client::class)->findBy(array('parent' => $id));
         $earnings = $this->getDoctrine()->getRepository(Work::class)->clientMonthlyEarnings($id);
+        $child_earnings = $this->getDoctrine()->getRepository(Work::class)->childMonthlyEarnings($id);
         $total = $this->getDoctrine()->getRepository(Work::class)->clientTotal($id);
+        $child = $this->getDoctrine()->getRepository(Work::class)->childTotal($id);
 
 
 
         $monthly = [];
         $monthly_sum = [];
+
         foreach ($earnings as $earn) {
             $month = $earn['month_year'];
             $pay = $earn['pay'];
             array_push($monthly, $month);
             array_push($monthly_sum, $pay);
+        }
+
+        $child_monthly = [];
+        $child_monthly_sum = [];
+        foreach ($child_earnings as $child_earn) {
+            $child_month = $child_earn['month_year'];
+            $child_pay = $child_earn['pay'];
+            array_push($child_monthly, $child_month);
+            array_push($child_monthly_sum, $child_pay);
         }
 
 
@@ -151,7 +163,10 @@ class ClientController extends Controller{
             'parents' => $parents,
             'monthly' => $monthly,
             'monthly_sum' => $monthly_sum,
-            'total'  => $total
+            'child_monthly' => $child_monthly,
+            'child_monthly_sum' => $child_monthly_sum,
+            'total'  => $total,
+            'child' => $child
         ));
 
     }

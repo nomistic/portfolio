@@ -81,9 +81,12 @@ class DashboardController extends Controller{
     public function showWorkTotal()
     {
         $works = $this->getDoctrine()->getRepository(Work::class)->totalByClient();
+        $totals = $this->getDoctrine()->getRepository(Work::class)->totalCounts();
+
 
         return $this->render('reports/index.html.twig', array(
-            'works' => $works
+            'works' => $works,
+            'totals' => $totals
         ));
 
 

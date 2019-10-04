@@ -3,10 +3,27 @@
 {% block title %}Reports{% endblock %}
 
 {% block body %}
-    <h1>Total per Client</h1>
+    <h3>Total Counts</h3>
+    <table id="counts" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Work Type</th>
+            <th>Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for total in totals %}
+            <tr>
+                <td>{{ total.work_type }}</td>
+                <td>{{ total.number }}</td>
+            </tr>
 
+        {% endfor %}
 
+        </tbody>
+    </table>
 
+    <h3>Total per Client</h3>
 
     {% if works %}
         <table id="works" class="table table-striped">

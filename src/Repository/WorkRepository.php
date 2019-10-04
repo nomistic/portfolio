@@ -27,7 +27,6 @@ class WorkRepository extends ServiceEntityRepository
 
     public function totalByClient() {
         $em = $this->getEntityManager();
-        //$qb = $em->createQueryBuilder();
 
         $works = $em->createQuery(
             'select c.name, sum(w.net_pay) AS amount, count(w.id) as jobs, sum(w.net_pay)/count(w.id) as average_pay
@@ -41,10 +40,23 @@ class WorkRepository extends ServiceEntityRepository
         return $works->execute();
 
     }
+    public function totalCounts() {
+        $em = $this->getEntityManager();
+
+        $works = $em->createQuery(
+            'select w.work_type,  count(w.id) AS number
+            FROM App\Entity\Work w
+            GROUP BY w.work_type
+            ORDER BY number DESC
+            '
+        );
+
+        return $works->execute();
+
+    }
 
     public function TopTotalByClient() {
         $em = $this->getEntityManager();
-        //$qb = $em->createQueryBuilder();
 
         $works = $em->createQuery(
             'select c.name, sum(w.net_pay) AS amount, count(w.id) as jobs, sum(w.net_pay)/count(w.id) as average_pay
@@ -62,7 +74,6 @@ class WorkRepository extends ServiceEntityRepository
 
     public function clientTotal($id) {
         $em = $this->getEntityManager();
-        //$qb = $em->createQueryBuilder();
 
         $works = $em->createQuery(
             'select sum(w.net_pay)
@@ -77,22 +88,7 @@ class WorkRepository extends ServiceEntityRepository
 
     public function childTotal($id) {
         $em = $this->getEntityManager();
-//        $ern = ("SELECT
-//                        SUM(net_pay)
-//                    FROM WORK
-//                    WHERE
-//                        client_id_id IN (
-//                        SELECT
-//                            id
-//                        FROM
-//                            client
-//                        WHERE
-//                            parent_id = ?)");
-//
-//        $stmt = $em->getConnection()->prepare($ern);
-//        $stmt->bindValue(1, $id);
-//        $stmt->execute();
-//        return $stmt->fetch();
+
         $works = $em->createQuery(
             'select sum(w.net_pay)
             FROM App\Entity\Work w
@@ -111,7 +107,6 @@ class WorkRepository extends ServiceEntityRepository
 
     public function MostJobsByClient() {
         $em = $this->getEntityManager();
-        //$qb = $em->createQueryBuilder();
 
         $works = $em->createQuery(
             'select c.name, sum(w.net_pay) AS amount, count(w.id) as jobs, sum(w.net_pay)/count(w.id) as average_pay

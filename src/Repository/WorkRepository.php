@@ -161,6 +161,26 @@ class WorkRepository extends ServiceEntityRepository
 
     }
 
+    public function annualEarnings()
+    {
+        $em = $this->getEntityManager();
+        $ern = ("SELECT
+                    YEAR(date_submitted) AS year_sub,
+                    SUM(net_pay) AS pay
+                FROM WORK
+                WHERE
+                    net_pay IS NOT NULL
+                GROUP BY
+                    year_sub
+                ORDER BY
+                    year_sub");
+
+        $stmt = $em->getConnection()->prepare($ern);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+    }
+
     public function clientMonthlyEarnings($id)
     {
         $em = $this->getEntityManager();

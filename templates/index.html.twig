@@ -26,9 +26,19 @@
     </div>
     <p></p>
     <div class="row card-deck">
-    <div class="col-md-4 "></div>
+    <div class="col-md-4 card col-md-4 ui-state-default">
+        <h4>Works in Progress</h4>
+        <p><a href="/work/new">New Entry</a></p>
 
-    <div class="card col-md-8 ui-state-default">
+        {% for wip in wips %}
+            <a href="/work/{{ wip.id }}">{{ wip.title }}</a> <br/>
+
+
+        {% endfor %}
+
+    </div>
+
+    <div class="card ui-state-default">
         <div class=earning">
             <h4>Earnings over Time</h4>
             <canvas id="EarningsChart"></canvas>

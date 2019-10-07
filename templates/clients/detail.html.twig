@@ -54,6 +54,28 @@
     </div>
     </div>
         {% if client.works %}
+            {% if wips %}
+            <h3>In progress</h3>
+            <table id="works" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                </tr>
+                </thead>
+                <tbody>
+
+
+                {% for wip in wips %}
+                    <tr>
+                        <td><a href="/work/{{ wip.id }}">{{ wip }}</a></td>
+
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+            {% endif %}    
         <h3>Works</h3>
             <table id="works" class="table table-striped">
                 <thead>
@@ -64,16 +86,16 @@
                 <tbody>
 
 
-            {% for work in client.works %}
-                <tr>
-                    <td><a href="/work/{{ work.id }}">{{ work }}</a></td>
+                {% for work in works %}
+                    <tr>
+                        <td><a href="/work/{{ work.id }}">{{ work }}</a></td>
 
-                </tr>
-
-
+                    </tr>
 
 
-            {% endfor %}
+
+
+                {% endfor %}
                 </tbody>
 
             </table>

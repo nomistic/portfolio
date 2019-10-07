@@ -129,7 +129,9 @@ class ClientController extends Controller{
     public function clientDetail($id)
     {
         $client = $this->getDoctrine()->getRepository(Client::class)->find($id);
-        
+        $works = $this->getDoctrine()->getRepository(Work::class)->submittedWork($id);
+        $wips = $this->getDoctrine()->getRepository(Work::class)->inProgressWork($id);
+
         $parents = $this->getDoctrine()->getRepository(Client::class)->findBy(array('parent' => $id));
         $earnings = $this->getDoctrine()->getRepository(Work::class)->clientMonthlyEarnings($id);
         $child_earnings = $this->getDoctrine()->getRepository(Work::class)->childMonthlyEarnings($id);
@@ -159,7 +161,9 @@ class ClientController extends Controller{
 
 
         return $this->render('clients/detail.html.twig', array(
+            'wips' => $wips,
             'client' => $client,
+            'works' => $works,
             'parents' => $parents,
             'monthly' => $monthly,
             'monthly_sum' => $monthly_sum,

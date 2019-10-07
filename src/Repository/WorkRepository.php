@@ -25,6 +25,36 @@ class WorkRepository extends ServiceEntityRepository
         return $this->findBy(array(), array('title' => 'ASC'));
     }
 
+    public function workSubmitted()
+    {
+        $em = $this->getEntityManager();
+
+        $works = $em->createQuery(
+            'select w
+            FROM App\Entity\Work w
+            WHERE w.date_submitted IS NOT NULL
+            ORDER BY w.title asc
+            '
+        );
+
+        return $works->execute();
+    }
+
+    public function workInProgress()
+    {
+        $em = $this->getEntityManager();
+
+        $works = $em->createQuery(
+            'select w
+            FROM App\Entity\Work w
+            WHERE w.date_submitted IS NULL
+            ORDER BY w.title asc
+            '
+        );
+
+        return $works->execute();
+    }
+
     public function totalByClient() {
         $em = $this->getEntityManager();
 
@@ -72,6 +102,34 @@ class WorkRepository extends ServiceEntityRepository
     }
 
 
+    public function submittedWork($id) {
+        $em = $this->getEntityManager();
+
+        $works = $em->createQuery(
+            'select w
+            FROM App\Entity\Work w
+            WHERE w.date_submitted IS NOT NULL
+            AND w.client_id = ?1
+            ')->setParameter(1, $id);
+
+
+        return $works->execute();
+    }
+
+    public function inProgressWork($id) {
+        $em = $this->getEntityManager();
+
+        $works = $em->createQuery(
+            'select w
+            FROM App\Entity\Work w
+            WHERE w.date_submitted IS NULL
+            AND w.client_id = ?1
+            ')->setParameter(1, $id);
+
+
+        return $works->execute();
+    }
+
     public function clientTotal($id) {
         $em = $this->getEntityManager();
 
@@ -83,7 +141,6 @@ class WorkRepository extends ServiceEntityRepository
         $works->getSingleScalarResult();
 
         return $works->execute();
-
     }
 
     public function childTotal($id) {

@@ -26,7 +26,7 @@ class ProjectController extends Controller{
     public function index()
     {
 
-        $works = $this->getDoctrine()->getRepository(Work::class)->findAll();
+        $works = $this->getDoctrine()->getRepository(Work::class)->workSubmitted();
 
             //return new Response('<html><body>Hello World</body></html>');
         return $this->render('works/index.html.twig', array(

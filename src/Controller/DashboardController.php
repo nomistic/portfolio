@@ -25,6 +25,7 @@ class DashboardController extends Controller{
 
        // $works = $this->getDoctrine()->getRepository(Work::class)->findAll();
         $works = $this->getDoctrine()->getRepository(Work::class)->TopTotalByClient();
+        $wips = $this->getDoctrine()->getRepository(Work::class)->workInProgress();
         $jobs = $this->getDoctrine()->getRepository(Work::class)->MostJobsByClient();
         $earnings = $this->getDoctrine()->getRepository(Work::class)->monthlyEarnings();
 
@@ -64,6 +65,7 @@ class DashboardController extends Controller{
         //return new Response('<html><body>Hello World</body></html>');
         return $this->render('index.html.twig', array(
             'works' => $works,
+            'wips'  => $wips,
             'clientss' => $clients,
             'amounts' => $amounts,
             'j_clients' => $j_clients,

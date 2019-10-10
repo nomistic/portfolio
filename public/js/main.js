@@ -47,5 +47,20 @@ if (subjects) {
 }
 
 
+const stages = document.getElementById('stages');
+
+if (stages) {
+    stages.addEventListener('click', e => {
+        if (e.target.className === 'btn btn-sm btn-danger delete-stage') {
+        if (confirm('Are you sure?')) {
+            const id = e.target.getAttribute('data-id');
+
+            fetch(`/stage/delete/${id}`, {
+                method: 'DELETE'
+            }).then(res => window.location.reload());
+        }
+    }
+});
+}
 
 

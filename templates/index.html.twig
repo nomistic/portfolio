@@ -29,12 +29,14 @@
     <div class="col-md-4 card col-md-4 ui-state-default">
         <h4>Works in Progress</h4>
         <p><a href="/work/new">New Entry</a></p>
+        {% if wips %}
 
-        {% for wip in wips %}
-            <a href="/work/{{ wip.id }}">{{ wip.title }}</a> <br/>
+            {% for wip in wips %}
+                <a href="/stages/{{ wip.id }}">{{ wip.title }}</a>  <br/>
 
 
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
 
     </div>
 

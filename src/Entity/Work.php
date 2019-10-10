@@ -104,9 +104,15 @@ class Work
      */
     private $subjects;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Stage", mappedBy="work_id")
+     */
+    private $stages;
+
     public function __construct()
     {
         $this->subjects = new ArrayCollection();
+        $this->stages = new ArrayCollection();
     }
 
 
@@ -347,6 +353,37 @@ class Work
         if ($this->subjects->contains($subject)) {
             $this->subjects->removeElement($subject);
             $subject->removeWork($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stage[]
+     */
+    public function getStages(): Collection
+    {
+        return $this->stages;
+    }
+
+    public function addStage(Stage $stage): self
+    {
+        if (!$this->stages->contains($stage)) {
+            $this->stages[] = $stage;
+            $stage->setWorkId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStage(Stage $stage): self
+    {
+        if ($this->stages->contains($stage)) {
+            $this->stages->removeElement($stage);
+            // set the owning side to null (unless already changed)
+            if ($stage->getWorkId() === $this) {
+                $stage->setWorkId(null);
+            }
         }
 
         return $this;

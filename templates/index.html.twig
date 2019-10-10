@@ -31,11 +31,17 @@
         <p><a href="/work/new">New Entry</a></p>
         {% if wips %}
 
-            {% for wip in wips %}
-                <a href="/stages/{{ wip.id }}">{{ wip.title }}</a>  <br/>
+            <table class="table table-striped">
+                <tbody>
+                {% for wip in wips %}
+                    <tr>
+                        <td><a href="/stages/{{ wip.id }}">{{ wip.title }}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
 
-            {% endfor %}
         {% endif %}
 
     </div>

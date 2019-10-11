@@ -17,8 +17,10 @@
                 <th>Stage No.</th>
                 <th>Due Date</th>
                 <th>Budget Hours</th>
-                <th>Budget Set Rate</th>
+                <th>Budget Amount</th>
                 <th>Completed Hours</th>
+                <th>Created</th>
+                <th>Last Updated</th>
             </tr>
             </thead>
             <tbody>
@@ -30,6 +32,8 @@
                     <td> {{ stage.getBudgetHours }}</td>
                     <td> {{ stage.getBudgetSetrate }}</td>
                     <td> {{ stage.getCompletedHours }}</td>
+                    <td> {{ stage.getDateCreated|date("m/d/Y") }}</td>
+                    <td> {{ stage.getLastUpdated|date("m/d/Y") }}</td>
                     <td>
                         <!--a href="/work/{{ work.id }}" class="btn btn-sm btn-dark">Detail</a-->
                         <a href="/stage/edit/{{ stage.id }}" class="btn btn-sm btn-light">Edit</a>

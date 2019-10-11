@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class StageController extends Controller {
 
@@ -53,6 +54,8 @@ class StageController extends Controller {
         if($form->isSubmitted() && $form->isValid()) {
             $stage = $form->getData();
             $stage->setWorkId($work);
+            $stage->setDateCreated(new \DateTime());
+            $stage->setLastUpdated(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($stage);
             $em->flush();
@@ -89,7 +92,8 @@ class StageController extends Controller {
         if($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-
+            $stage->setLastUpdated(new \DateTime());
+            $em->persist($stage);
             $em->flush();
 
             return $this->redirectToRoute('project_stages', array('id' => $work->getId()) );

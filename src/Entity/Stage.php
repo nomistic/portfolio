@@ -47,6 +47,16 @@ class Stage
      */
     private $completed_hours;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_created;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $last_updated;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +130,30 @@ class Stage
     public function setCompletedHours(?string $completed_hours): self
     {
         $this->completed_hours = $completed_hours;
+
+        return $this;
+    }
+
+    public function getDateCreated(): ?\DateTimeInterface
+    {
+        return $this->date_created;
+    }
+
+    public function setDateCreated(\DateTimeInterface $date_created): self
+    {
+        $this->date_created = $date_created;
+
+        return $this;
+    }
+
+    public function getLastUpdated(): ?\DateTimeInterface
+    {
+        return $this->last_updated;
+    }
+
+    public function setLastUpdated(\DateTimeInterface $last_updated): self
+    {
+        $this->last_updated = $last_updated;
 
         return $this;
     }

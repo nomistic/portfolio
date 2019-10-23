@@ -34,7 +34,7 @@ class WorkRepository extends ServiceEntityRepository
                 $condition = "1=1";
             }
             else {
-                $condition = "w.type = $type";
+                $condition = "w.type = ?1";
             }
 
         }
@@ -52,6 +52,9 @@ class WorkRepository extends ServiceEntityRepository
             ORDER BY w.title asc
             "
         );
+        if (isset($type)  && $type != 11) {
+            $works->setParameter(1, $type);
+        }
         //->setParameter(1, $condition);
 
         return $works->execute();

@@ -68,7 +68,9 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $( function() {
-            $("#list_sorting").sortable();
+            $("#list_sorting").sortable({
+                cursor: 'move'
+            } );
             $("#list_sorting").disableSelection();
         } );
     </script>

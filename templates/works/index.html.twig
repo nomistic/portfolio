@@ -6,6 +6,12 @@
     <h1>Completed Works</h1>
 
         <p><a href="/work/new">New Entry</a></p>
+<div class="col-md-4">
+    {{  form_start(form) }}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+</div>
 
 
     {% if works %}

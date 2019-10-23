@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\NewWorkType;
 use App\Form\EditWorkType;
+use App\Form\SearchWorkType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,17 +21,31 @@ use Symfony\Component\Serializer\Serializer;
 
 class ProjectController extends Controller{
     /**
-     * @Route("/works", name="work_list")
+     * @Route("/works/{type}", name="work_list")
      * @Method("GET")
      */
-    public function index()
+    public function index(Request $request, $type = null)
     {
 
-        $works = $this->getDoctrine()->getRepository(Work::class)->workSubmitted();
 
-            //return new Response('<html><body>Hello World</body></html>');
+        $works = $this->getDoctrine()->getRepository(Work::class)->workSubmitted($type);
+
+        $form = $this->createForm(SearchWorkType::class, $works);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $type = $data['type']->getId();
+
+            return $this->redirectToRoute('work_list', array('type' => $type) );
+        }
+
         return $this->render('works/index.html.twig', array(
-            'works' => $works
+            'form' => $form->createView(),
+            'works' => $works,
+            'type' => $type
+
         ));
 
     }

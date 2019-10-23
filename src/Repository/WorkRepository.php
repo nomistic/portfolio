@@ -25,17 +25,34 @@ class WorkRepository extends ServiceEntityRepository
         return $this->findBy(array(), array('title' => 'ASC'));
     }
 
-    public function workSubmitted()
+    public function workSubmitted($type)
     {
         $em = $this->getEntityManager();
 
+        if (isset($type)) {
+            if ($type == 11) {
+                $condition = "1=1";
+            }
+            else {
+                $condition = "w.type = $type";
+            }
+
+        }
+        else {
+            $condition = "1=1";
+        }
+
         $works = $em->createQuery(
-            'select w
+            "select w
             FROM App\Entity\Work w
+           
             WHERE w.date_submitted IS NOT NULL
+            AND $condition
+
             ORDER BY w.title asc
-            '
+            "
         );
+        //->setParameter(1, $condition);
 
         return $works->execute();
     }

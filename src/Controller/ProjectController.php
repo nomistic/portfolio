@@ -34,17 +34,23 @@ class ProjectController extends Controller{
 
         $form->handleRequest($request);
 
+
+
         if($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $type = $data['type']->getId();
+            $type = $data['type'];
 
             return $this->redirectToRoute('work_list', array('type' => $type) );
+        }
+        else {
+            $typename = '';
         }
 
         return $this->render('works/index.html.twig', array(
             'form' => $form->createView(),
             'works' => $works,
-            'type' => $type
+            'type' => $type,
+
 
         ));
 

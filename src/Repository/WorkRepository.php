@@ -30,11 +30,11 @@ class WorkRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
 
         if (isset($type)) {
-            if ($type == 11) {
+            if ($type == 'All') {
                 $condition = "1=1";
             }
             else {
-                $condition = "w.type = ?1";
+                $condition = "t.name = ?1";
             }
 
         }
@@ -45,17 +45,16 @@ class WorkRepository extends ServiceEntityRepository
         $works = $em->createQuery(
             "select w
             FROM App\Entity\Work w
-           
+            JOIN w.type t
             WHERE w.date_submitted IS NOT NULL
             AND $condition
 
             ORDER BY w.title asc
             "
         );
-        if (isset($type)  && $type != 11) {
+        if (isset($type)  && $type != 'All') {
             $works->setParameter(1, $type);
         }
-        //->setParameter(1, $condition);
 
         return $works->execute();
     }

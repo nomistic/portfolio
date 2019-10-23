@@ -12,7 +12,11 @@
     {{ form_widget(form) }}
     {{ form_end(form) }}
 </div>
-
+<div>
+    <h4>
+         {% if type %} {{ type }} {% endif %}
+    </h4>
+</div>
 
     {% if works %}
         <table id="works" class="table table-striped">

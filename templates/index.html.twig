@@ -6,28 +6,26 @@
     <div class="card-deck" id="list_sorting">
         <div class="card ui-state-default">
             <div class="card text">
-    <h3><a href="works">Works</a></h3>
-    <h3><a href="clients">Clients</a></h3>
-    <h3><a href="subjects">Subjects</a></h3>
-    <h3><a href="reports">Reports</a></h3>
+                <h3><a href="works">Works</a></h3>
+                <h3><a href="clients">Clients</a></h3>
+                <h3><a href="subjects">Subjects</a></h3>
+                <h3><a href="reports">Reports</a></h3>
+            </div>
         </div>
+        <div class="card ui-state-default">
+            <h5>Top clients/pay</h5>
+            <canvas id="TopClientsChart"></canvas>
         </div>
-    <div class="card ui-state-default">
-        <h4>Top clients/pay</h4>
-        <canvas id="TopClientsChart"></canvas>
-    </div>
-    <div class="card ui-state-default">
-        <h4>Top clients/# of Jobs</h4>
-        <canvas id="MostJobsChart"></canvas>
+        <div class="card ui-state-default">
+            <h5>Top clients/# of Jobs</h5>
+            <canvas id="MostJobsChart"></canvas>
+        </div>
     </div>
 
-
-
-    </div>
     <p></p>
     <div class="row card-deck">
     <div class="col-md-4 card col-md-4 ui-state-default">
-        <h4>Works in Progress</h4>
+        <h5>Works in Progress</h5>
         <p><a href="/work/new">New Entry</a></p>
         {% if wips %}
 
@@ -48,7 +46,7 @@
 
     <div class="card ui-state-default">
         <div class=earning">
-            <h4>Earnings over Time</h4>
+            <h5>Earnings over Time</h5>
             <canvas id="EarningsChart"></canvas>
         </div>
     </div>
@@ -69,7 +67,7 @@
     <script>
         $( function() {
             $("#list_sorting").sortable({
-                cursor: 'move'
+                cursor: 'grabbing',
             } );
             $("#list_sorting").disableSelection();
         } );

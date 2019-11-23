@@ -79,6 +79,22 @@ class ProjectController extends Controller{
 
     }
 
+    /**
+     * @Route("/work/authored", name="authored")
+     * @Method("GET")
+     */
+    public function authoredWorks()
+    {
+        $work = $this->getDoctrine()->getRepository(Work::class)->authoredWorks();
+
+        return $this->render('works/authored.html.twig', array(
+
+            'works' => $work,
+
+        ));
+
+    }
+
 
     /**
      * @Route("/work/new", name="new_work")

@@ -48,7 +48,7 @@
             {% for work in works %}
 
                 <tr>
-                    <td> {{ work.name }}</td>
+                    <td> <a href="/client/{{ work.cid }}">{{ work.name }}</a></td>
                     <td>{{ work.amount }}</td>
                     <td>{{ work.jobs }}</td>
 

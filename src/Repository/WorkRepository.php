@@ -320,38 +320,41 @@ class WorkRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         $all =  ("SELECT
-                    w.id,
-                    w.title,
-                    w.description,
-                    c.name AS CLIENT,
-                    t.name AS TYPE,
-                    f.name AS FORMAT,
-                    p.name AS platform,
-                    w.notes,
-                    w.pub_url,
-                    w.priv_url,
-                    w.ghost_ind,
-                    w.net_pay,
-                    w.hours,
-                    w.hourly,
-                    w.date_submitted,
-                    w.date_published,
-                    w.work_type,
-                    s.name as subject
-                FROM WORK
-                    w
-                LEFT JOIN CLIENT c ON
-                    w.client_id_id = c.id
-                LEFT JOIN TYPE t ON
-                    w.type_id = t.id
-                LEFT JOIN FORMAT f ON
-                    w.format_id = f.id
-                LEFT JOIN platform p ON
-                    w.platform_id = p.id
-                LEFT JOIN subject_work sw ON
-                    w.id = sw.work_id
-                LEFT JOIN SUBJECT s ON
-                    s.id = sw.subject_id");
+                        w.id,
+                        w.title,
+                        w.description,
+                        c.name AS CLIENT,
+                        t.name AS TYPE,
+                        f.name AS FORMAT,
+                        p.name AS platform,
+                        w.notes,
+                        w.pub_url,
+                        w.priv_url,
+                        w.ghost_ind,
+                        w.net_pay,
+                        w.hours,
+                        w.hourly,
+                        w.date_submitted,
+                        w.date_published,
+                        w.work_type,
+                        ws.subject
+                    FROM WORK
+                        w
+                    LEFT JOIN CLIENT c ON
+                        w.client_id_id = c.id
+                    LEFT JOIN TYPE t ON
+                        w.type_id = t.id
+                    LEFT JOIN FORMAT f ON
+                        w.format_id = f.id
+                    LEFT JOIN platform p ON
+                        w.platform_id = p.id
+                    LEFT JOIN (select sw.work_id, GROUP_CONCAT(s.name SEPARATOR ';') as subject
+                    from subject_work sw
+                    INNER JOIN subject s 
+                    ON s.id = sw.subject_id
+                    group by sw.work_id) ws
+                    ON w.id = ws.work_id
+                    order by w.title");
 
 
         $stmt = $em->getConnection()->prepare($all);

@@ -91,7 +91,7 @@ class ProjectController extends Controller{
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename=works.csv');
 
-        fputcsv($csv, array('id','title','description','client','type','format','platform','notes','pub_url','priv_url','ghost_ind','net_pay','hours','hourly','date_submitted','date_published','work_type'));
+        fputcsv($csv, array('id','title','description','client','type','format','platform','notes','pub_url','priv_url','ghost_ind','net_pay','hours','hourly','date_submitted','date_published','work_type','subject'));
 
         foreach( $rows as $row ) {
             fputcsv($csv, $row);

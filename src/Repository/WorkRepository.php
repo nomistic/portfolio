@@ -336,7 +336,8 @@ class WorkRepository extends ServiceEntityRepository
                     w.hourly,
                     w.date_submitted,
                     w.date_published,
-                    w.work_type
+                    w.work_type,
+                    s.name as subject
                 FROM WORK
                     w
                 LEFT JOIN CLIENT c ON
@@ -346,7 +347,11 @@ class WorkRepository extends ServiceEntityRepository
                 LEFT JOIN FORMAT f ON
                     w.format_id = f.id
                 LEFT JOIN platform p ON
-                    w.platform_id = p.id");
+                    w.platform_id = p.id
+                LEFT JOIN subject_work sw ON
+                    w.id = sw.work_id
+                LEFT JOIN SUBJECT s ON
+                    s.id = sw.subject_id");
 
 
         $stmt = $em->getConnection()->prepare($all);

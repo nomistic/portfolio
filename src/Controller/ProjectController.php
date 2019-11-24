@@ -80,6 +80,28 @@ class ProjectController extends Controller{
     }
 
     /**
+     * @Route("/csv", name="csv_output")
+     * @Method("GET")
+     */
+    public function exportCSV()
+    {
+
+        $rows = $this->getDoctrine()->getRepository(Work::class)->csvOutput();
+        $csv = fopen('php://output', 'w');
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=works.csv');
+
+        fputcsv($csv, array('id','title','description','client','type','format','platform','notes','pub_url','priv_url','ghost_ind','net_pay','hours','hourly','date_submitted','date_published','work_type'));
+
+        foreach( $rows as $row ) {
+            fputcsv($csv, $row);
+        }
+
+        fclose($csv);
+    }
+
+
+    /**
      * @Route("/work/authored", name="authored")
      * @Method("GET")
      */

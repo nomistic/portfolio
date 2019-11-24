@@ -316,6 +316,44 @@ class WorkRepository extends ServiceEntityRepository
 
     }
 
+    public function csvOutput()
+    {
+        $em = $this->getEntityManager();
+        $all =  ("SELECT
+                    w.id,
+                    w.title,
+                    w.description,
+                    c.name AS CLIENT,
+                    t.name AS TYPE,
+                    f.name AS FORMAT,
+                    p.name AS platform,
+                    w.notes,
+                    w.pub_url,
+                    w.priv_url,
+                    w.ghost_ind,
+                    w.net_pay,
+                    w.hours,
+                    w.hourly,
+                    w.date_submitted,
+                    w.date_published,
+                    w.work_type
+                FROM WORK
+                    w
+                LEFT JOIN CLIENT c ON
+                    w.client_id_id = c.id
+                LEFT JOIN TYPE t ON
+                    w.type_id = t.id
+                LEFT JOIN FORMAT f ON
+                    w.format_id = f.id
+                LEFT JOIN platform p ON
+                    w.platform_id = p.id");
+
+
+        $stmt = $em->getConnection()->prepare($all);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
 
 
 }

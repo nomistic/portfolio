@@ -35,7 +35,11 @@ class User implements UserInterface, \Serializable
      */
     private $password;
 
-
+    public function __toString(): ?string
+    {
+        // TODO: Implement __toString() method.
+        return $this->email;
+    }
 
     public function getId(): ?int
     {

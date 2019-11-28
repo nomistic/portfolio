@@ -28,6 +28,7 @@ class DashboardController extends Controller{
         $wips = $this->getDoctrine()->getRepository(Work::class)->workInProgress();
         $jobs = $this->getDoctrine()->getRepository(Work::class)->MostJobsByClient();
         $earnings = $this->getDoctrine()->getRepository(Work::class)->monthlyEarnings();
+        $user = $this->getUser();
 
         $clients = [];
         $amounts = [];
@@ -71,7 +72,8 @@ class DashboardController extends Controller{
             'j_clients' => $j_clients,
             'j_jobs' => $j_jobs,
             'monthly' => $monthly,
-            'monthly_sum' => $monthly_sum
+            'monthly_sum' => $monthly_sum,
+            'user' => $user
         ));
 
     }

@@ -87,6 +87,8 @@ class ProjectController extends Controller{
     {
 
         $rows = $this->getDoctrine()->getRepository(Work::class)->csvOutput();
+        ob_end_clean();
+
         $csv = fopen('php://output', 'w');
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename=works.csv');
@@ -98,6 +100,9 @@ class ProjectController extends Controller{
         }
 
         fclose($csv);
+        exit();
+
+
     }
 
 

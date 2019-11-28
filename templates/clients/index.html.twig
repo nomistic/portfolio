@@ -11,6 +11,7 @@
             <thead>
             <tr>
                 <th>Client Name</th>
+                <th>Parent</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -19,6 +20,7 @@
 
                 <tr>
                     <td> <a href="/client/{{ client.id }}">{{ client.name }}</a></td>
+                    <td>{% if client.parent %}<a href="/client/{{ client.parent.getId }}">{{ client.parent }}</a>{% endif %}</td>
                     <td>
                         <!--a href="/client/{{ client.id }}" class="btn btn-dark">View Detail</a-->
                         <a href="/client/edit/{{ client.id }}" class="btn btn-light">Edit</a>

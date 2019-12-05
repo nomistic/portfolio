@@ -246,6 +246,7 @@ class WorkRepository extends ServiceEntityRepository
                 FROM WORK
                 WHERE
                     net_pay IS NOT NULL
+                AND date_submitted IS NOT NULL    
                 GROUP BY
                     year_sub
                 ORDER BY

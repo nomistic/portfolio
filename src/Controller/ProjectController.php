@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProjectController extends Controller{
     /**
@@ -153,10 +154,8 @@ class ProjectController extends Controller{
      * @Route("/work/edit/{id}", name="edit_work")
      * @Method({"GET", "POST"})
      */
-    public function editWork(Request $request, $id)
+    public function editWork(Request $request, Work $work, $id)
     {
-        //$work = new Work();
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
 
         $form = $this->createForm(EditWorkType::class, $work);
 

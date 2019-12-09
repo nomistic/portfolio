@@ -65,27 +65,10 @@ class ClientController extends Controller{
      * @Route("/client/edit/{id}", name="edit_client")
      * @Method({"GET", "POST"})
      */
-    public function editClient(Request $request, $id)
+    public function editClient(Request $request, Client $client)
     {
-        $client = new Client();
-        $client = $this->getDoctrine()->getRepository(Client::class)->find($id);
 
         $form = $this->createForm(NewClientType::class, $client);
-        $form = $this->createFormBuilder($client)
-            ->add('name', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('client_last', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('client_first', TextType::class, array('attr' => array('class' => 'form-control')))
-            ->add('parent', EntityType::class, array(
-                'attr' => array('class' => 'form-control'),
-                'required' => false,
-                'class' => Client::class
-            ))
-
-            ->add('save', SubmitType::class, array(
-                'label' => 'Update',
-                'attr' => array('class' => 'btn btn-primary mt-3')
-            ))
-            ->getForm();
 
         $form->handleRequest($request);
 

@@ -33,7 +33,14 @@
             {% for work in works %}
 
                 <tr>
-                    <td> <a href="/work/{{ work.id }}">{{ work.title }}</a></td>
+                    <td>
+                        {% if work.getGhostInd == 0 %}
+                        <span class="authored"><a href="/work/{{ work.id }}">{{ work.title }}</a></span>
+                        {% else %}
+                        <a href="/work/{{ work.id }}">{{ work.title }}</a>
+                        {% endif %}
+                    
+                    </td>
                     <td> {{ work.getClientId }}</td>
                     <td>
                         <!--a href="/work/{{ work.id }}" class="btn btn-sm btn-dark">Detail</a-->

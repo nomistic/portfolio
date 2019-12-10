@@ -26,9 +26,8 @@ class StageController extends Controller {
      * @Route("/stages/{id}", name="project_stages")
      * @Method("GET")
      */
-    public function index($id)
+    public function index(Work $work, $id)
     {
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
 
         $stages = $this->getDoctrine()->getRepository(Stage::class)->findBy(array('work_id'=>$id));
 
@@ -43,11 +42,10 @@ class StageController extends Controller {
      * @Route("/stage/new/{id}", name="new_stage")
      * @Method({"GET", "POST"})
      */
-    public function newStage(Request $request, $id)
+    public function newStage(Request $request, Work $work)
     {
         $stage = new Stage();
         $form = $this->createForm(NewStageType::class, $stage);
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
 
         $form->handleRequest($request);
 
@@ -75,11 +73,9 @@ class StageController extends Controller {
      * @Route("/stage/edit/{id}", name="edit_stage")
      * @Method({"GET", "POST"})
      */
-    public function editStage(Request $request, $id)
+    public function editStage(Request $request, Stage $stage)
     {
-        //$work = new Work();
-        //$work = $this->getDoctrine()->getRepository(Work::class)->find($id);
-        $stage = $this->getDoctrine()->getRepository(Stage::class)->find($id);
+
         $work_id = $stage->getWorkId();
         $work = $this->getDoctrine()->getRepository(Work::class)->findOneBy(array('id' =>$work_id ));
 
@@ -110,9 +106,8 @@ class StageController extends Controller {
      * @Route("/stage/delete/{id}")
      * @Method({"DELETE"})
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request, Stage $stage)
     {
-        $stage = $this->getDoctrine()->getRepository(Stage::class)->find($id);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($stage);
@@ -127,8 +122,8 @@ class StageController extends Controller {
      * @Route("/work/submit_date/{id}", name="mark_complete")
      * @Method({"GET"})
      */
-    public function markComplete($id){
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
+    public function markComplete(Work $work){
+       // $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
         $work->setDateSubmitted(new \DateTime());
 
         $em = $this->getDoctrine()->getManager();

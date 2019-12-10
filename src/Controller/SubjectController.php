@@ -66,10 +66,8 @@ class SubjectController extends Controller{
      * @Route("/subject/edit/{id}", name="edit_subject")
      * @Method({"GET", "POST"})
      */
-    public function editSubject(Request $request, $id)
+    public function editSubject(Request $request, Subject $subject)
     {
-        $subject = new Subject();
-        $subject = $this->getDoctrine()->getRepository(Subject::class)->find($id);
 
         $form = $this->createForm(EditSubjectType::class, $subject);
         $form->handleRequest($request);
@@ -93,9 +91,8 @@ class SubjectController extends Controller{
      * @Route("/work/subject/{id}", name="work_subs")
      * @Method({"GET", "POST"})
      */
-    public function WorkSubject($id)
+    public function WorkSubject(Subject $subject, $id)
     {
-        $subject =$this->getDoctrine()->getRepository(Subject::class)->find($id);
 
         $works = $this->getDoctrine()->getRepository(Subject::class)->workSubject($id);
         //$works = $this->getDoctrine()->getRepository(Work::class)->findBy(array('subjects' => $subject));
@@ -114,9 +111,8 @@ class SubjectController extends Controller{
      * @Route("/subject/delete/{id}")
      * @Method({"DELETE"})
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request, Subject $subject)
     {
-        $subject = $this->getDoctrine()->getRepository(Subject::class)->find($id);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($subject);

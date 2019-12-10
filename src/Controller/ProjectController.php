@@ -184,9 +184,8 @@ class ProjectController extends Controller{
      * @Route("/work/delete/{id}")
      * @Method({"DELETE"})
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request, Work $work)
     {
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($work);
@@ -200,9 +199,8 @@ class ProjectController extends Controller{
     /**
      * @Route("/work/{id}", name="work_detail")
      */
-    public function workDetail($id)
+    public function workDetail(Work $work)
     {
-        $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
         $client_id = $work->getClientId();
         $client = $this->getDoctrine()->getRepository(Client::class)->findOneBy(array('id'=> $client_id));
 

@@ -32,9 +32,16 @@
 
             <table class="table table-striped">
                 <tbody>
+                <tr>
+                    <th>Title</th>
+                    <th>Stage</th>
+                    <th>Due</th>
+                </tr>
                 {% for wip in wips %}
                     <tr>
-                        <td><a href="/stages/{{ wip.id }}">{{ wip.title }}</a></td>
+                        <td><a href="/stages/{{ wip.id }}">{{ wip.title }} </a></td>
+                        <td>{{ wip.stage_no }}</td>
+                        <td>{{ wip.date_due|date("m/d/Y") }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

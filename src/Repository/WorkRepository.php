@@ -64,10 +64,13 @@ class WorkRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
 
         $works = $em->createQuery(
-            'select w
+            'select  w.id, w.title, s.stage_no, s.date_due
             FROM App\Entity\Work w
+            LEFT JOIN w.stages s
             WHERE w.date_submitted IS NULL
-            ORDER BY w.title asc
+            AND s.completed != 1
+
+            ORDER BY s.date_due asc
             '
         );
 

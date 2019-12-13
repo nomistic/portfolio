@@ -41,6 +41,10 @@ class EditStageType extends AbstractType
             ->add('budget_hours', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
             ->add('budget_setrate', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
             ->add('completed_hours', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
+            ->add('completed', CheckboxType::class, [
+                'mapped' => true,
+                'required' => false
+                ])
 
             ->add('save', SubmitType::class, array(
                 'label' => 'Update',

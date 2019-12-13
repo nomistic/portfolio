@@ -22,6 +22,7 @@
                 <th>Completed Hours</th>
                 <th>Created</th>
                 <th>Last Updated</th>
+                <th>Completed</th>
             </tr>
             </thead>
             <tbody>
@@ -36,6 +37,7 @@
                     <td> {{ stage.getCompletedHours }}</td>
                     <td> {{ stage.getDateCreated|date("m/d/Y") }}</td>
                     <td> {{ stage.getLastUpdated|date("m/d/Y") }}</td>
+                    <td>  {% if stage.getCompleted ==1 %} Y {% endif %}</td>
                     <td>
                         <!--a href="/work/{{ work.id }}" class="btn btn-sm btn-dark">Detail</a-->
                         <a href="/stage/edit/{{ stage.id }}" class="btn btn-sm btn-light">Edit</a>

@@ -62,6 +62,11 @@ class Stage
      */
     private $notes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $completed;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +176,18 @@ class Stage
     public function setNotes(?string $notes): self
     {
         $this->notes = $notes;
+
+        return $this;
+    }
+
+    public function getCompleted(): ?bool
+    {
+        return $this->completed;
+    }
+
+    public function setCompleted(bool $completed): self
+    {
+        $this->completed = $completed;
 
         return $this;
     }

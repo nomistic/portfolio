@@ -36,7 +36,7 @@ class NewStageType extends AbstractType
                 'attr' => array('class' => 'form-control'),
                 'required' => false))
 
-
+            ->add('notes', TextareaType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
             ->add('budget_hours', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
             ->add('budget_setrate', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
             ->add('completed_hours', TextType::class, array('attr' => array('class' => 'form-control'), 'required' => false))

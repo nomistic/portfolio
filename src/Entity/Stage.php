@@ -57,6 +57,11 @@ class Stage
      */
     private $last_updated;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $notes;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +159,18 @@ class Stage
     public function setLastUpdated(\DateTimeInterface $last_updated): self
     {
         $this->last_updated = $last_updated;
+
+        return $this;
+    }
+
+    public function getNotes(): ?string
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes): self
+    {
+        $this->notes = $notes;
 
         return $this;
     }

@@ -58,7 +58,7 @@ class StageController extends Controller {
             $em->persist($stage);
             $em->flush();
 
-            return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('project_stages', array('id' => $work->getId()));
         }
 
         return $this->render('works/new_stage.html.twig', array(

@@ -16,6 +16,7 @@
             <tr>
                 <th>Stage No.</th>
                 <th>Due Date</th>
+                <th>Notes</th>
                 <th>Budget Hours</th>
                 <th>Budget Amount</th>
                 <th>Completed Hours</th>
@@ -29,6 +30,7 @@
                 <tr>
                     <td> {{ stage.getStageNo }}</td>
                     <td> {{ stage.getDateDue|date("m/d/Y") }}</td>
+                    <td> {{ stage.getNotes }}</td>
                     <td> {{ stage.getBudgetHours }}</td>
                     <td> {{ stage.getBudgetSetrate }}</td>
                     <td> {{ stage.getCompletedHours }}</td>

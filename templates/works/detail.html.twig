@@ -5,6 +5,7 @@
 {% block body %}
     <div class="col-lg-8">
 <h3>{{ work.title }}</h3>
+        <p><a href="/stage/new/{{ work.id }}">Create New Stage</a></p>
     {% if client %}
     <h4>Client: <a href="/client/{{ client.id }}">{{ client.name }}</a> </h4>
     {% endif %}

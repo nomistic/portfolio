@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Work;
+use App\Entity\Stage;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -136,8 +137,21 @@ class ProjectController extends Controller{
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+
             $work = $form->getData();
             $em = $this->getDoctrine()->getManager();
+
+            //automatically create a new dummy work stage
+            $stage = new Stage();
+            $stage->setWorkId($work);
+            $stage->setDateCreated(new \DateTime());
+            $stage->setLastUpdated(new \DateTime());
+            $stage->setStageNo('1');
+            $stage->setCompleted(false);
+
+            $em->persist($stage);
+
             $em->persist($work);
             $em->flush();
 

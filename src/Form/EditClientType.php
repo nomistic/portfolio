@@ -42,6 +42,7 @@ class EditClientType extends AbstractType
                 'class' => Client::class,
                 'data' => null
             ))
+            ->add('notes', TextareaType::class, array('attr' => array('class' => 'form-control'), 'required' => false))
 
             ->add('save', SubmitType::class, array(
                 'label' => 'Update',

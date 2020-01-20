@@ -43,6 +43,11 @@ class Client
      */
     private $parent;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $notes;
+
 
     public function __toString(){
         // to show the name of the Category in the select
@@ -136,6 +141,18 @@ class Client
     public function setParent(?Client $parent): self
     {
         $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getNotes(): ?string
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes): self
+    {
+        $this->notes = $notes;
 
         return $this;
     }

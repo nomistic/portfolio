@@ -227,6 +227,7 @@ class WorkRepository extends ServiceEntityRepository
                         SUM(net_pay) AS pay
                     FROM work 
                     WHERE net_pay is not NULL 
+                    AND date_submitted is not NULL
                     GROUP BY
                         year_sub,
                         month_year

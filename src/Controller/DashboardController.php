@@ -87,6 +87,7 @@ class DashboardController extends Controller{
         $works = $this->getDoctrine()->getRepository(Work::class)->totalByClient();
         $totals = $this->getDoctrine()->getRepository(Work::class)->totalCounts();
         $annuals = $this->getDoctrine()->getRepository(Work::class)->annualEarnings();
+        $last12 = $this->getDoctrine()->getRepository(Work::class)->last12();
 
         $yearly = [];
         $yearly_sum = [];
@@ -97,13 +98,24 @@ class DashboardController extends Controller{
             array_push($yearly_sum, $year_sum);
         }
 
+        $monthly12 = [];
+        $monthly12_sum = [];
+        foreach ($last12 as $earn) {
+            $month = $earn['month_year'];
+            $pay   = $earn['pay'];
+            array_push($monthly12, $month);
+            array_push($monthly12_sum, $pay);
+        }
 
         return $this->render('reports/index.html.twig', array(
             'works' => $works,
             'totals' => $totals,
             'annuals' => $annuals,
             'yearly' => $yearly,
-            'yearly_sum' => $yearly_sum
+            'yearly_sum' => $yearly_sum,
+            'last12' => $last12,
+            'monthly12' => $monthly12,
+            'monthly12_sum' => $monthly12_sum
         ));
 
 

@@ -8,6 +8,7 @@
         <li><a href="#counts">Total Counts</a></li>
         <li><a href="#works">Total per Client</a></li>
         <li><a href="#annual">Annual Earnings</a></li>
+        <li><a href="#last12">Last 12 Months Earnings</a></li>
     </ul>
 
 
@@ -89,6 +90,34 @@
             </tbody>
         </table>
 
+        <h3 id="last12">Last 12 Months</h3>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="earning col-md-8">
+
+                <canvas id="Last12Chart"></canvas>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Year</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for last in last12 %}
+                <tr>
+                    <td>{{ last.month_year }}</td>
+                    <td>{{ last.pay }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
     {% else %}
         No creations are available.
     {% endif %}
@@ -131,6 +160,35 @@
                 responsive: true
             }
         });
+
+        var ctxL = document.getElementById("Last12Chart").getContext('2d');
+
+        var monthly12 = {{ monthly12|json_encode|raw }};
+        var monthly12_sum = {{ monthly12_sum|json_encode|raw }};
+
+        var myLineChart = new Chart(ctxL, {
+            type: 'line',
+            data: {
+                labels: monthly12,
+                //labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Earnings",
+                    data: monthly12_sum,
+                    //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
+                    backgroundColor: [
+                        'rgba(105, 0, 132, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(200, 99, 132, .7)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
 
 
     </script>

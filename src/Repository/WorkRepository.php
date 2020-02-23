@@ -240,6 +240,34 @@ class WorkRepository extends ServiceEntityRepository
         return $stmt->fetchAll();
 
     }
+    public function last12()
+    {
+        $em = $this->getEntityManager();
+        $ern = ("SELECT
+                        YEAR(date_submitted) AS year_sub,
+                        CONCAT(
+                            YEAR(date_submitted),
+                            ' ',
+                            MONTHNAME(date_submitted)
+                        ) AS month_year,
+                        SUM(net_pay) AS pay
+                    FROM work 
+                    WHERE net_pay is not NULL 
+                    AND date_submitted is not NULL
+                    AND date_submitted > date_sub(NOW(), INTERVAL 12 MONTH)
+                    GROUP BY
+                        year_sub,
+                        month_year
+                    ORDER BY
+                        year_sub,
+                        MONTH(date_submitted)
+                    LIMIT 1,13");
+
+        $stmt = $em->getConnection()->prepare($ern);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+    }
 
     public function annualEarnings()
     {

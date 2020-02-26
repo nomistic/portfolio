@@ -165,6 +165,8 @@
 
         var monthly12 = {{ monthly12|json_encode|raw }};
         var monthly12_sum = {{ monthly12_sum|json_encode|raw }};
+        var p_monthly12 = {{ p_monthly12|json_encode|raw }};
+        var p_sum = {{ p_sum|json_encode|raw }};
 
         var myLineChart = new Chart(ctxL, {
             type: 'line',
@@ -174,7 +176,6 @@
                 datasets: [{
                     label: "Earnings",
                     data: monthly12_sum,
-                    //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
                     backgroundColor: [
                         'rgba(105, 0, 132, .2)',
                     ],
@@ -182,11 +183,31 @@
                         'rgba(200, 99, 132, .7)',
                     ],
                     borderWidth: 2
-                }]
+                },
+                    {
+                        label: "Previous Year",
+                        data: p_sum,
+                        backgroundColor: [
+                            'rgba(105, 0, 132, .2)',
+                        ],
+                        borderColor: [
+                            'rgba(0, 188, 140, .7)',
+                        ],
+                        borderWidth: 2
+                    }
+
+
+
+
+                ]
             },
             options: {
-                responsive: true
+                responsive: true,
+                tooltips: {
+                    mode: 'index'
+                }
             }
+
         });
 
 

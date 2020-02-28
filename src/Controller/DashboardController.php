@@ -89,6 +89,7 @@ class DashboardController extends Controller{
         $annuals = $this->getDoctrine()->getRepository(Work::class)->annualEarnings();
         $last12 = $this->getDoctrine()->getRepository(Work::class)->last12();
         $prev12 = $this->getDoctrine()->getRepository(Work::class)->prev12();
+        $recentClients = $this->getDoctrine()->getRepository(Client::class)->recentClients();
 
         $yearly = [];
         $yearly_sum = [];
@@ -127,7 +128,8 @@ class DashboardController extends Controller{
             'monthly12' => $monthly12,
             'monthly12_sum' => $monthly12_sum,
             'p_monthly12' => $p_monthly12,
-            'p_sum' => $p_sum
+            'p_sum' => $p_sum,
+            'recent_clients' => $recentClients
         ));
 
 

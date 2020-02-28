@@ -42,6 +42,34 @@ class ClientRepository extends ServiceEntityRepository
 
     }
 
+    public function recentClients()
+    {
+        $em = $this->getEntityManager();
+        $cli = ("SELECT
+                        c.id,
+                        c.name,
+                        w.date_submitted AS 'last_date'
+                    FROM WORK w
+                    JOIN CLIENT c ON
+                        c.id = w.client_id_id
+                    WHERE
+                        w.date_submitted =(
+                        SELECT
+                            MAX(w2.date_submitted)
+                        FROM WORK w2
+                        WHERE
+                            w2.client_id_id = w.client_id_id
+                    )
+                    ORDER BY
+                        w.date_submitted
+                    DESC");
+
+        $stmt = $em->getConnection()->prepare($cli);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+    }
+
 
 
 

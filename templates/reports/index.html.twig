@@ -9,6 +9,7 @@
         <li><a href="#works">Total per Client</a></li>
         <li><a href="#annual">Annual Earnings</a></li>
         <li><a href="#last12">Last 12 Months Earnings</a></li>
+        <li><a href="#recent">Recent Clients</a></li>
     </ul>
 
 
@@ -117,6 +118,30 @@
 
             </tbody>
         </table>
+
+        <h3 id="recent">Recent Clients</h3>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Recent Job Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for client in recent_clients %}
+                <tr>
+                    <td><a href="/client/{{ client.id }}">{{ client.name }}</a></td>
+                    <td>{{ client.last_date }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+        <hr>
+
 
     {% else %}
         No creations are available.

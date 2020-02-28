@@ -48,6 +48,11 @@ class Client
      */
     private $notes;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $url;
+
 
     public function __toString(){
         // to show the name of the Category in the select
@@ -153,6 +158,18 @@ class Client
     public function setNotes(?string $notes): self
     {
         $this->notes = $notes;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

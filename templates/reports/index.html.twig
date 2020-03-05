@@ -4,141 +4,186 @@
 
 {% block body %}
     <h1>Reports</h1>
-    <ul>
-        <li><a href="#counts">Total Counts</a></li>
-        <li><a href="#works">Total per Client</a></li>
-        <li><a href="#annual">Annual Earnings</a></li>
-        <li><a href="#last12">Last 12 Months Earnings</a></li>
-        <li><a href="#recent">Recent Clients</a></li>
-    </ul>
+
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#counts">Total Counts</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#works">Total per Client</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#annual">Annual Earnings</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#last12">Last 12 Months Earnings</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#recent">Recent Clients</button></li>
 
 
-    <h3 id="counts">Total Counts</h3>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Work Type</th>
-            <th>Number</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for total in totals %}
-            <tr>
-                <td>{{ total.work_type }}</td>
-                <td>{{ total.number }}</td>
-            </tr>
 
-        {% endfor %}
+    <div class="modal fade" id="counts" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Total Counts</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Work Type</th>
+                            <th>Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for total in totals %}
+                            <tr>
+                                <td>{{ total.work_type }}</td>
+                                <td>{{ total.number }}</td>
+                            </tr>
 
-        </tbody>
-    </table>
+                        {% endfor %}
 
-    <h3 id="works">Total per Client</h3>
-
-    {% if works %}
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Client</th>
-                <th>Amount</th>
-                <th>Jobs</th>
-
-                <th>Avg/Job</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for work in works %}
-
-                <tr>
-                    <td> <a href="/client/{{ work.cid }}">{{ work.name }}</a></td>
-                    <td>{{ work.amount }}</td>
-                    <td>{{ work.jobs }}</td>
-
-                    <td>{{ (work.amount / work.jobs) | round(2,'common') }}</td>
-
-                </tr>
-            {% endfor %}
-            </tbody>
-
-        </table>
-
-        <h3 id="annual">Annual Earnings</h3>
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="earning col-md-8">
-                
-                <canvas id="YearlyEarningsChart"></canvas>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-2"></div>
-        </div>
+         </div>
+    </div>
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Year</th>
-                <th>Amount</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for annual in annuals %}
-                <tr>
-                    <td>{{ annual.year_sub }}</td>
-                    <td>{{ annual.pay }}</td>
-                </tr>
+    <div class="modal fade" id="works" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 id="works">Total per Client</h3>
+                    {% if works %}
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Amount</th>
+                            <th>Jobs</th>
+                            <th>Avg/Job</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for work in works %}
+                            <tr>
+                                <td> <a href="/client/{{ work.cid }}">{{ work.name }}</a></td>
+                                <td>{{ work.amount }}</td>
+                                <td>{{ work.jobs }}</td>
 
-            {% endfor %}
-
-            </tbody>
-        </table>
-
-        <h3 id="last12">Last 12 Months</h3>
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="earning col-md-8">
-
-                <canvas id="Last12Chart"></canvas>
+                                <td>{{ (work.amount / work.jobs) | round(2,'common') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-2"></div>
         </div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Year</th>
-                <th>Amount</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for last in last12 %}
-                <tr>
-                    <td>{{ last.month_year }}</td>
-                    <td>{{ last.pay }}</td>
-                </tr>
+    </div>
 
-            {% endfor %}
 
-            </tbody>
-        </table>
+    <div class="modal fade" id="annual" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Annual Earnings</h3>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="earning col-md-8">
 
-        <h3 id="recent">Recent Clients</h3>
+                            <canvas id="YearlyEarningsChart"></canvas>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Recent Job Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for client in recent_clients %}
-                <tr>
-                    <td><a href="/client/{{ client.id }}">{{ client.name }}</a></td>
-                    <td>{{ client.last_date }}</td>
-                </tr>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for annual in annuals %}
+                            <tr>
+                                <td>{{ annual.year_sub }}</td>
+                                <td>{{ annual.pay }}</td>
+                            </tr>
 
-            {% endfor %}
+                        {% endfor %}
 
-            </tbody>
-        </table>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="last12" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Last 12 Months</h3>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="earning col-md-8">
+
+                            <canvas id="Last12Chart"></canvas>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for last in last12 %}
+                            <tr>
+                                <td>{{ last.month_year }}</td>
+                                <td>{{ last.pay }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="recent" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <h3>Recent Clients</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Recent Job Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for client in recent_clients %}
+                            <tr>
+                                <td><a href="/client/{{ client.id }}">{{ client.name }}</a></td>
+                                <td>{{ client.last_date }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 
         <hr>
 

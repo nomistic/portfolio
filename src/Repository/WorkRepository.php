@@ -92,6 +92,22 @@ class WorkRepository extends ServiceEntityRepository
         return $works->execute();
 
     }
+
+    public function totalWritingByType() {
+        $em = $this->getEntityManager();
+
+        $works = $em->createQuery(
+          "select t.name, count(w.id) as total
+          FROM App\Entity\Work w 
+          LEFT JOIN w.type t
+          WHERE w.work_type = 'writing'
+          GROUP BY t.name 
+          ORDER BY total DESC"
+        );
+
+        return $works->execute();
+    }
+
     public function totalCounts() {
         $em = $this->getEntityManager();
 

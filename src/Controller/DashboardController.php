@@ -85,6 +85,7 @@ class DashboardController extends Controller{
     public function showWorkTotal()
     {
         $works = $this->getDoctrine()->getRepository(Work::class)->totalByClient();
+        $types = $this->getDoctrine()->getRepository(Work::class)->totalWritingByType();
         $totals = $this->getDoctrine()->getRepository(Work::class)->totalCounts();
         $annuals = $this->getDoctrine()->getRepository(Work::class)->annualEarnings();
         $last12 = $this->getDoctrine()->getRepository(Work::class)->last12();
@@ -98,6 +99,15 @@ class DashboardController extends Controller{
             $year_sum = $annual['pay'];
             array_push($yearly, $year);
             array_push($yearly_sum, $year_sum);
+        }
+
+        $type_list = [];
+        $type_count = [];
+        foreach ($types as $type) {
+            $type_group = $type['name'];
+            $type_sum = $type['total'];
+            array_push($type_list, $type_group);
+            array_push($type_count, $type_sum);
         }
 
         $monthly12 = [];
@@ -129,7 +139,10 @@ class DashboardController extends Controller{
             'monthly12_sum' => $monthly12_sum,
             'p_monthly12' => $p_monthly12,
             'p_sum' => $p_sum,
-            'recent_clients' => $recentClients
+            'recent_clients' => $recentClients,
+            'types' => $types,
+            'type_list' => $type_list,
+            'type_count' => $type_count
         ));
 
 

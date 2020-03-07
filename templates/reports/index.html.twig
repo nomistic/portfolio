@@ -6,6 +6,7 @@
     <h1>Reports</h1>
 
      <button class="btn btn-info btn-md" data-toggle="modal" data-target="#counts">Total Counts</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#types">Writing by Type</button></li>
      <button class="btn btn-info btn-md" data-toggle="modal" data-target="#works">Total per Client</button></li>
      <button class="btn btn-info btn-md" data-toggle="modal" data-target="#annual">Annual Earnings</button></li>
      <button class="btn btn-info btn-md" data-toggle="modal" data-target="#last12">Last 12 Months Earnings</button></li>
@@ -41,8 +42,45 @@
          </div>
     </div>
 
+    <div class="modal fade" id="types" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Writing by Type</h3>
+
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="earning col-md-8">
+
+                            <canvas id="TypeChart"></canvas>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for type in types %}
+                            <tr>
+                                <td>{{ type.name }}</td>
+                                <td>{{ type.total }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+         </div>
+    </div>
+
     <div class="modal fade" id="works" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <h3 id="works">Total per Client</h3>
@@ -224,6 +262,44 @@
                         'rgba(200, 99, 132, .7)',
                     ],
                     borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        var ctxL = document.getElementById("TypeChart").getContext('2d');
+
+        var type_list = {{ type_list|json_encode|raw }};
+        var type_count = {{ type_count|json_encode|raw }};
+
+        var myLineChart = new Chart(ctxL, {
+            type: 'pie',
+            data: {
+                labels: type_list,
+                //labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Earnings",
+                    data: type_count,
+                    //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
                 }]
             },
             options: {

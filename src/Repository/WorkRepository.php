@@ -298,7 +298,7 @@ class WorkRepository extends ServiceEntityRepository
                     FROM work 
                     WHERE net_pay is not NULL 
                     AND date_submitted is not NULL
-                    AND date_submitted > date_sub(NOW(), INTERVAL 25 MONTH)
+                    AND date_submitted > date_sub(NOW(), INTERVAL 24 MONTH)
                     GROUP BY
                         year_sub,
                         month_year

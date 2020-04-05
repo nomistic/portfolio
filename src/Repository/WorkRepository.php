@@ -81,7 +81,7 @@ class WorkRepository extends ServiceEntityRepository
         $em = $this->getEntityManager();
 
         $works = $em->createQuery(
-            'select c.name, c.id as cid, sum(w.net_pay) AS amount, count(w.id) as jobs, sum(w.net_pay)/count(w.id) as average_pay
+            'select c.name, c.id as cid, sum(w.net_pay) AS amount, count(w.id) as jobs, sum(w.net_pay)/count(w.id) as average_pay, c.status
             FROM App\Entity\Work w
             LEFT JOIN w.client_id c
             GROUP BY c.name

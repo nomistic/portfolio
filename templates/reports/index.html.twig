@@ -97,7 +97,7 @@
                         <tbody>
                         {% for work in works %}
                             <tr>
-                                <td> <a href="/client/{{ work.cid }}">{{ work.name }}</a></td>
+                                <td><button type="button" {% if work.status == 2 %}class="btn btn-success btn-circle btn-sm" {% elseif work.status== 1 %}class="btn btn-warning btn-circle btn-sm" {% else %}class="btn btn-secondary btn-circle btn-sm"{% endif %}></button>&nbsp;  <a href="/client/{{ work.cid }}">{{ work.name }}</a></td>
                                 <td>{{ work.amount }}</td>
                                 <td>{{ work.jobs }}</td>
 
@@ -205,7 +205,7 @@
                         <tbody>
                         {% for client in recent_clients %}
                             <tr>
-                                <td><a href="/client/{{ client.id }}">{{ client.name }}</a></td>
+                                <td><button type="button" {% if client.status == 2 %}class="btn btn-success btn-circle btn-sm" {% elseif client.status== 1 %}class="btn btn-warning btn-circle btn-sm" {% else %}class="btn btn-secondary btn-circle btn-sm"{% endif %}></button>&nbsp; <a href="/client/{{ client.id }}">{{ client.name }}</a></td>
                                 <td>{{ client.last_date }}</td>
                             </tr>
 

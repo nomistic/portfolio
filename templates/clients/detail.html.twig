@@ -7,6 +7,10 @@
     <div class="card col-md-3 ui-state-default">
     <h3>{{ client.name }}</h3>
     <p>{{ client.getClientLast }}, {{ client.getClientFirst }}</p>
+    <p>Status: {% if client.status == 2 %} Active {% elseif client.status == 1 %} Current {% else %} Idle {% endif %}
+
+
+    </p>
     <p><a href="{{ client.url }}" target="_blank">{{ client.url }}</a></p>
     <div>
         {% if client.parent %}

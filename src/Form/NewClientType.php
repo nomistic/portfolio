@@ -36,6 +36,13 @@ class NewClientType extends AbstractType
         $builder->add('name', TextType::class, array('attr' => array('class' => 'form-control')))
             ->add('client_last', TextType::class, array('required' => false,'attr' => array('class' => 'form-control' )))
             ->add('client_first', TextType::class, array('required' => false, 'attr' => array('class' => 'form-control')))
+            ->add('status', ChoiceType::class,  [
+                'choices' => [
+                    'Idle' => 0,
+                    'Current' => 1,
+                    'Active' => 2,
+                ], 'attr' => array('class'=> 'form_control')
+            ])
             ->add('url', TextType::class, array('required' => false, 'attr' => array('class' => 'form-control')))
             ->add('parent', EntityType::class, array(
                 'attr' => array('class' => 'form-control'),

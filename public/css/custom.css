@@ -4,3 +4,14 @@ select#new_work_subjects.form-control, select#edit_work_subjects.form-control{
 .authored a {
     color: greenyellow;
 }
+
+.btn-circle.btn-sm {
+    width: 8px;
+    height: 8px;
+    padding: 3px 3px;
+    margin-bottom: 4px;
+    vertical-align: middle;
+    border-radius: 4px;
+    font-size: 8px;
+    text-align: center;
+}

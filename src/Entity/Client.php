@@ -53,6 +53,11 @@ class Client
      */
     private $url;
 
+    /**
+     * @ORM\Column(name="status", type="smallint", options={"default" : 0})
+     */
+    private $status;
+
 
     public function __toString(){
         // to show the name of the Category in the select
@@ -170,6 +175,18 @@ class Client
     public function setUrl(?string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

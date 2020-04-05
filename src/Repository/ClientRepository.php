@@ -48,6 +48,7 @@ class ClientRepository extends ServiceEntityRepository
         $cli = ("SELECT
                         c.id,
                         c.name,
+                        c.status,
                         w.date_submitted AS 'last_date'
                     FROM WORK w
                     JOIN CLIENT c ON

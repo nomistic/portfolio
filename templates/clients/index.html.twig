@@ -20,7 +20,7 @@
             {% for client in clients %}
 
                 <tr>
-                    <td> <a href="/client/{{ client.id }}">{{ client.name }}</a></td>
+                    <td><button type="button" {% if client.status == 2 %}class="btn btn-success btn-circle btn-sm" {% elseif client.status== 1 %}class="btn btn-warning btn-circle btn-sm" {% else %}class="btn btn-secondary btn-circle btn-sm"{% endif %}></button>&nbsp; <a href="/client/{{ client.id }}">{{ client.name }}</a></td>
                     <td>{{ client.notes }}</td>
                     <td>{% if client.parent %}<a href="/client/{{ client.parent.getId }}">{{ client.parent }}</a>{% endif %}</td>
                     <td>

@@ -150,7 +150,13 @@ class ProjectController extends Controller{
             $stage->setStageNo('1');
             $stage->setCompleted(false);
 
+            //get client id for status change
+            $client_id = $work->getClientId();
+            $client = $this->getDoctrine()->getRepository(Client::class)->findOneBy(array('id'=>$client_id));
+            $client->setStatus(2);
+
             $em->persist($stage);
+            $em->persist($client);
 
             $em->persist($work);
             $em->flush();

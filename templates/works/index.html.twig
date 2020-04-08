@@ -15,9 +15,11 @@
     {{ form_end(form) }}
 </div>
 <div>
+    <p>
     <h4>
-         {% if type %} {{ type }} {% endif %}
+         {% if type %} Type: {{ type }} {% endif %}
     </h4>
+    </p>
 </div>
 
     {% if works %}
@@ -26,6 +28,8 @@
             <tr>
                 <th>Work Title</th>
                 <th>Client</th>
+                <th>Type</th>
+                <th>Work Type</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -42,6 +46,8 @@
 
                     </td>
                     <td> {{ work.getClientId }}</td>
+                    <td> {{ work.type }}</td>
+                    <td> {{ work.getWorkType }}</td>
                     <td>
                         <!--a href="/work/{{ work.id }}" class="btn btn-sm btn-dark">Detail</a-->
                         <a href="/work/edit/{{ work.id }}" class="btn btn-sm btn-light">Edit</a>

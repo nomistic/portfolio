@@ -1,0 +1,8 @@
+*.phar
+.idea/
+*.iml
+*.bat
+.env
+/vendor/
+/bin/
+/cache/

@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Works{% endblock %}
+
+{% block body %}
+    <div class="col-lg-8">
+<h3>{{ work.title }}</h3>
+        <p><a href="/stage/new/{{ work.id }}">Create New Stage</a></p>
+        <p><a href="/stages/{{ work.id }}">View Stages</a> </p>
+    {% if client %}
+    <h4>Client: <a href="/client/{{ client.id }}">{{ client.name }}</a> </h4>
+    {% endif %}
+
+    <p>
+    <h4>Description</h4>
+    {{ work.description }}
+    </p>
+    <p>
+    <h4>Notes</h4>
+    {{ work.notes }}
+    </p>
+
+        <a href="/work/edit/{{ work.id }}" class="btn btn-sm btn-light">Edit</a>
+    <table class="table  table-bordered">
+        <tbody>
+        <tr>
+            <td>
+                Public URL:
+            </td>
+            <td>
+                <a href="{{ work.getPubUrl }}" target="_blank">{{ work.getPubUrl }}</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Private URL:
+            </td>
+            <td>
+                <a href="{{ work.getPrivUrl }}" target="_blank">{{ work.getPrivUrl }}</a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Ghost status:
+            </td>
+            <td>
+                {% if work.getGhostInd %}
+                    Ghost-written
+                {% else %}
+                    Authored
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p>Subjects:
+
+                </p>
+            </td>
+            <td>
+                {% if work.subjects %}
+                    {% for subject in work.subjects %}
+                        <a href="/work/subject/{{ subject.id }}">{{ subject }}</a> <br>
+                    {% endfor %}
+                {% endif %}
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Type:
+
+            </td>
+            <td>
+                {{ work.type }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Net Pay:
+
+            </td>
+            <td>
+                {{ work.getNetPay }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Hours:
+            </td>
+            <td>
+                {{ work.hours }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Hourly status:
+
+
+            </td>
+            <td>
+                {% if work.hourly %}
+                    Hourly
+                {% else %}
+                    Fixed
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Format:
+
+            </td>
+            <td>
+                {{ work.format }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Submitted Date:
+
+            </td>
+            <td>
+                {{ work.getDateSubmitted ? work.getDateSubmitted|date("m/d/Y") }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Published Date:
+
+            </td>
+            <td>
+                {{ work.getDatePublished ? work.getDatePublished|date("m/d/Y") }}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                Platform:
+
+            </td>
+            <td>
+                {{ work.platform }}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                Work Type:
+
+            </td>
+            <td>
+                {{ work.getWorkType }}
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+    <hr>
+    <a href="/works">Back to menu</a>
+{% endblock %}
+

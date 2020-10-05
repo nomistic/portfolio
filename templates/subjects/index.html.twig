@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Subjects{% endblock %}
+
+{% block body %}
+    <h1>Subjects</h1>
+    <p><a href="/subject/new">Add a Subject</a></p>
+
+    {% if subjects %}
+        <table id="subjects" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Subject Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for subject in subjects %}
+
+                <tr>
+                    <td> <a href="/work/subject/{{ subject.id }}">{{ subject.name }}</a></td>
+                    <td>
+                        <a href="/subject/edit/{{ subject.id }}" class="btn btn-light">Edit</a>
+                        <a href="#" class="btn btn-danger delete-subject" data-id="{{ subject.id }}">Delete</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+
+    {% else %}
+        No clients currently listed.
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}
+

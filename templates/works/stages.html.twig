@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Works{% endblock %}
+
+{% block body %}
+    {% if work %}
+    <h3> <a href="/work/{{ work.id }}">{{ work }}</a> Stages</h3>
+        <h4><a href="/client/{{ work.getClientId.getId }}">{{ work.getClientId }}</a></h4>
+
+    <p><a href="/stage/new/{{ work.id }}">Create New Stage</a></p>
+    {% endif %}
+
+ {#{{ dump(stages) }}#}
+    {% if stages %}
+        <table id="stages" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Stage No.</th>
+                <th>Due Date</th>
+                <th>Notes</th>
+                <th>Budget Hours</th>
+                <th>Budget Amount</th>
+                <th>Completed Hours</th>
+                <th>Created</th>
+                <th>Last Updated</th>
+                <th>Completed</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for stage in stages %}
+
+                <tr>
+                    <td> {{ stage.getStageNo }}</td>
+                    <td> {{ stage.getDateDue|date("m/d/Y") }}</td>
+                    <td> {{ stage.getNotes }}</td>
+                    <td> {{ stage.getBudgetHours }}</td>
+                    <td> {{ stage.getBudgetSetrate }}</td>
+                    <td> {{ stage.getCompletedHours }}</td>
+                    <td> {{ stage.getDateCreated|date("m/d/Y") }}</td>
+                    <td> {{ stage.getLastUpdated|date("m/d/Y") }}</td>
+                    <td>  {% if stage.getCompleted ==1 %} Y {% endif %}</td>
+                    <td>
+                        <!--a href="/work/{{ work.id }}" class="btn btn-sm btn-dark">Detail</a-->
+                        <a href="/stage/edit/{{ stage.id }}" class="btn btn-sm btn-light">Edit</a>
+                        <a href="#" class="btn btn-sm btn-danger delete-stage" data-id="{{ stage.id }}">Delete</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+
+        </table>
+        <a href="{{ path('mark_complete', {'id': work.id}) }}" class="btn btn-primary">Submit Work</a>
+
+    {% else %}
+        No stages are currently set.
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}
+

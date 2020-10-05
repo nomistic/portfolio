@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Works{% endblock %}
+
+{% block body %}
+    <h1>Authored Works</h1>
+
+
+
+    {% if works %}
+        <table id="works" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Work Title</th>
+                <th>Description</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for work in works %}
+
+                <tr>
+                    <td> <a href="{{ work.pub_url }}" target="_blank">{{ work.title }}</a></td>
+                    <td> {{ work.description }}</td>
+
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+
+    {% else %}
+        No creations are available.
+    {% endif %}
+{% endblock %}

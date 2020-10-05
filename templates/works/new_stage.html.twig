@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Works{% endblock %}
+
+{% block body %}
+<h3>{{ work }}</h3>
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-6">
+
+            {{ form_widget(form) }}
+
+        </div>
+        <div class="col-lg-4">
+
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+
+    </div>
+    <hr>
+    <a href="/">Back to menu</a>
+{% endblock %}
+

@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio{% endblock %}
+
+{% block body %}
+    {{ user }}
+    <div class="card-deck" id="list_sorting">
+        <div class="card ui-state-default">
+            <div class="card text">
+                <h3><a href="works">Works</a></h3>
+                <h3><a href="clients">Clients</a></h3>
+                <h3><a href="subjects">Subjects</a></h3>
+                <h3><a href="reports">Reports</a></h3>
+            </div>
+        </div>
+        <div class="card ui-state-default">
+            <h5>Top clients/pay</h5>
+            <canvas id="TopClientsChart"></canvas>
+        </div>
+        <div class="card ui-state-default">
+            <h5>Top clients/# of Jobs</h5>
+            <canvas id="MostJobsChart"></canvas>
+        </div>
+    </div>
+
+    <p></p>
+    <div class="row card-deck">
+    <div class="col-md-4 card col-md-4 ui-state-default">
+        <h5>Works in Progress</h5>
+        <p><a href="/work/new">New Entry</a></p>
+        {% if wips %}
+
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>Title</th>
+                    <th>Stage</th>
+                    <th>Due</th>
+                </tr>
+                {% for wip in wips %}
+                    <tr>
+                        <td><a href="/stages/{{ wip.id }}">{{ wip.title }} </a></td>
+                        <td>{{ wip.stage_no }}</td>
+                        <td>{{ wip.date_due|date("m/d/Y") }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+        {% endif %}
+
+    </div>
+
+    <div class="card ui-state-default">
+        <div class="earning">
+            <h5>Earnings over Time</h5>
+            <canvas id="EarningsChart"></canvas>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $("#list_sorting").sortable({
+                cursor: 'grabbing',
+            } );
+            $("#list_sorting").disableSelection();
+        } );
+    </script>
+<script>
+
+    var ctx = document.getElementById("TopClientsChart").getContext('2d');
+    var amounts = {{ amounts|json_encode|raw }};
+    var clientss = {{ clientss|json_encode|raw }};
+    var TopClientsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: clientss,
+           //labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '$ paid',
+                data: amounts,
+                //data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var cty = document.getElementById("MostJobsChart").getContext('2d');
+    var j_jobs = {{ j_jobs|json_encode|raw }};
+    var j_clients = {{ j_clients|json_encode|raw }};
+    var MostJobsChart = new Chart(cty, {
+        type: 'bar',
+        data: {
+            labels: j_clients,
+           //labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of jobs',
+                data: j_jobs,
+                //data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var ctxL = document.getElementById("EarningsChart").getContext('2d');
+
+    var monthly = {{ monthly|json_encode|raw }};
+    var monthly_sum = {{ monthly_sum|json_encode|raw }};
+
+    var myLineChart = new Chart(ctxL, {
+        type: 'line',
+        data: {
+            labels: monthly,
+            //labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "Earnings",
+                data: monthly_sum,
+                //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
+                backgroundColor: [
+                    'rgba(105, 0, 132, .2)',
+                ],
+                borderColor: [
+                    'rgba(200, 99, 132, .7)',
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+</script>
+
+{% endblock %}
+

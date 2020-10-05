@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Works{% endblock %}
+
+{% block body %}
+    <h1>Completed Works</h1>
+
+        <p><a href="/work/authored">Authored Works</a></p>
+        <p><a href="/work/new">New Entry</a></p>
+        <p><a href="/csv" class="btn btn-sm btn-light">Download CSV</a></p>
+<div class="col-md-4">
+    {{  form_start(form) }}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+</div>
+<div>
+    <p>
+    <h4>
+         {% if type %} Type: {{ type }} {% endif %}
+    </h4>
+    </p>
+</div>
+
+    {% if works %}
+        <table id="works" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Work Title</th>
+                <th>Client</th>
+                <th>Type</th>
+                <th>Work Type</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for work in works %}
+
+                <tr>
+                    <td>
+                        {% if work.getGhostInd == 0 %}
+                        <span class="authored"><a href="/work/{{ work.id }}">{{ work.title }}</a></span>
+                        {% else %}
+                        <a href="/work/{{ work.id }}">{{ work.title }}</a>
+                        {% endif %}
+
+                    </td>
+                    <td> {{ work.getClientId }}</td>
+                    <td> {{ work.type }}</td>
+                    <td> {{ work.getWorkType }}</td>
+                    <td>
+                        <!--a href="/work/{{ work.id }}" class="btn btn-sm btn-dark">Detail</a-->
+                        <a href="/work/edit/{{ work.id }}" class="btn btn-sm btn-light">Edit</a>
+                        <a href="#" class="btn btn-sm btn-danger delete-article" data-id="{{ work.id }}">Delete</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+
+    {% else %}
+        No creations are available.
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+{% endblock %}
+

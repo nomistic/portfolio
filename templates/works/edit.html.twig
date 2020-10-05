@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio Works{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-6">
+
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title) }}
+
+            {{ form_label(form.client_id) }}
+            {{ form_widget(form.client_id) }}
+
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+
+            {{ form_label(form.notes) }}
+            {{ form_widget(form.notes) }}
+
+        </div>
+        <div class="col-lg-4">
+            {{ form_label(form.subjects) }}
+            <span style="float:right;"><a href="/subject/new" target="_blank">Add new subject</a></span>
+            {{ form_widget(form.subjects) }}
+
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <hr>
+    <a href="/clients">Back to client menu</a>
+{% endblock %}
+

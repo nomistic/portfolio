@@ -1,0 +1,367 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reports{% endblock %}
+
+{% block body %}
+    <h1>Reports</h1>
+
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#counts">Total Counts</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#types">Writing by Type</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#works">Total per Client</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#annual">Annual Earnings</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#last12">Last 12 Months Earnings</button></li>
+     <button class="btn btn-info btn-md" data-toggle="modal" data-target="#recent">Recent Clients</button></li>
+
+
+
+    <div class="modal fade" id="counts" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Total Counts</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Work Type</th>
+                            <th>Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for total in totals %}
+                            <tr>
+                                <td>{{ total.work_type }}</td>
+                                <td>{{ total.number }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+         </div>
+    </div>
+
+    <div class="modal fade" id="types" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Writing by Type</h3>
+
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="earning col-md-8">
+
+                            <canvas id="TypeChart"></canvas>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for type in types %}
+                            <tr>
+                                <td>{{ type.name }}</td>
+                                <td>{{ type.total }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+         </div>
+    </div>
+
+    <div class="modal fade" id="works" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 id="works">Total per Client</h3>
+                    {% if works %}
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Amount</th>
+                            <th>Jobs</th>
+                            <th>Avg/Job</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for work in works %}
+                            <tr>
+                                <td><button type="button" {% if work.status == 2 %}class="btn btn-success btn-circle btn-sm" {% elseif work.status== 1 %}class="btn btn-warning btn-circle btn-sm" {% else %}class="btn btn-secondary btn-circle btn-sm"{% endif %}></button>&nbsp;  <a href="/client/{{ work.cid }}">{{ work.name }}</a></td>
+                                <td>{{ work.amount }}</td>
+                                <td>{{ work.jobs }}</td>
+
+                                <td>{{ (work.amount / work.jobs) | round(2,'common') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="annual" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Annual Earnings</h3>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="earning col-md-8">
+
+                            <canvas id="YearlyEarningsChart"></canvas>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for annual in annuals %}
+                            <tr>
+                                <td>{{ annual.year_sub }}</td>
+                                <td>{{ annual.pay }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="last12" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Last 12 Months</h3>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="earning col-md-8">
+
+                            <canvas id="Last12Chart"></canvas>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for last in last12 %}
+                            <tr>
+                                <td>{{ last.month_year }}</td>
+                                <td>{{ last.pay }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="recent" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <h3>Recent Clients</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Recent Job Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for client in recent_clients %}
+                            <tr>
+                                <td><button type="button" {% if client.status == 2 %}class="btn btn-success btn-circle btn-sm" {% elseif client.status== 1 %}class="btn btn-warning btn-circle btn-sm" {% else %}class="btn btn-secondary btn-circle btn-sm"{% endif %}></button>&nbsp; <a href="/client/{{ client.id }}">{{ client.name }}</a></td>
+                                <td>{{ client.last_date }}</td>
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+        <hr>
+
+
+    {% else %}
+        No creations are available.
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/main.js"></script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+
+    <script>
+        var ctxL = document.getElementById("YearlyEarningsChart").getContext('2d');
+
+        var yearly = {{ yearly|json_encode|raw }};
+        var yearly_sum = {{ yearly_sum|json_encode|raw }};
+
+        var myLineChart = new Chart(ctxL, {
+            type: 'line',
+            data: {
+                labels: yearly,
+                //labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Earnings",
+                    data: yearly_sum,
+                    //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
+                    backgroundColor: [
+                        'rgba(105, 0, 132, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(200, 99, 132, .7)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        var ctxL = document.getElementById("TypeChart").getContext('2d');
+
+        var type_list = {{ type_list|json_encode|raw }};
+        var type_count = {{ type_count|json_encode|raw }};
+
+        var myLineChart = new Chart(ctxL, {
+            type: 'pie',
+            data: {
+                labels: type_list,
+                //labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Earnings",
+                    data: type_count,
+                    //data: [65, 59, 80, 81, 56, 55, 40, 55, 976, 44, 77],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(75, 192, 192, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        var ctxL = document.getElementById("Last12Chart").getContext('2d');
+
+        var monthly12 = {{ monthly12|json_encode|raw }};
+        var monthly12_sum = {{ monthly12_sum|json_encode|raw }};
+        var p_monthly12 = {{ p_monthly12|json_encode|raw }};
+        var p_sum = {{ p_sum|json_encode|raw }};
+
+        var myLineChart = new Chart(ctxL, {
+            type: 'line',
+            data: {
+                labels: monthly12,
+                //labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "Earnings",
+                    data: monthly12_sum,
+                    backgroundColor: [
+                        'rgba(105, 0, 132, .2)',
+                    ],
+                    borderColor: [
+                        'rgba(200, 99, 132, .7)',
+                    ],
+                    borderWidth: 2
+                },
+                    {
+                        label: "Previous Year",
+                        data: p_sum,
+                        backgroundColor: [
+                            'rgba(105, 0, 132, .2)',
+                        ],
+                        borderColor: [
+                            'rgba(0, 188, 140, .7)',
+                        ],
+                        borderWidth: 2
+                    }
+
+
+
+
+                ]
+            },
+            options: {
+                responsive: true,
+                tooltips: {
+                    mode: 'index'
+                }
+            }
+
+        });
+
+
+
+    </script>
+{% endblock %}
+

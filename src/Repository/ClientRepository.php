@@ -45,7 +45,7 @@ class ClientRepository extends ServiceEntityRepository
     public function recentClients()
     {
         $em = $this->getEntityManager();
-        $cli = ("SELECT DISTINCT 
+        $cli = ("SELECT
                         c.id,
                         c.name,
                         c.status,

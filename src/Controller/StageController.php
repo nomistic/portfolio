@@ -124,18 +124,31 @@ class StageController extends Controller {
      */
     public function markComplete(Work $work){
        // $work = $this->getDoctrine()->getRepository(Work::class)->find($id);
-        $work->setDateSubmitted(new \DateTime());
-        $client = $work->getClientId();
-        // change client status to current
-        $client->setStatus(1);
+        //$stages = $this->getDoctrine()->getRepository(Stage::class)->findBy(array('work_id'=>$work));
+        $net = $work->getNetPay();
+        if (!$net) {
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($work);
-        $em->persist($client);
-        $em->flush();
+            $this->addFlash("error", "You have not set a net pay amount");
 
-        return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('project_stages', array('id' => $work->getId()) );
+
+        }
+        else {
+            $work->setDateSubmitted(new \DateTime());
+            $client = $work->getClientId();
+            // change client status to current
+            $client->setStatus(1);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($work);
+            $em->persist($client);
+            $em->flush();
+
+            return $this->redirectToRoute('dashboard');
+
+        }
 
     }
+
 
 }

@@ -3,6 +3,13 @@
 {% block title %}Portfolio Works{% endblock %}
 
 {% block body %}
+
+    {% for msg in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ msg }}
+        </div>
+    {% endfor %}
+
     {% if work %}
     <h3> <a href="/work/{{ work.id }}">{{ work }}</a> Stages</h3>
         <h4><a href="/client/{{ work.getClientId.getId }}">{{ work.getClientId }}</a></h4>

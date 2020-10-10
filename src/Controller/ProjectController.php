@@ -208,6 +208,14 @@ class ProjectController extends Controller{
     {
 
         $em = $this->getDoctrine()->getManager();
+
+        $stages = $work->getStages();
+
+        foreach ($stages as $stage) {
+            $em->remove($stage);
+
+        }
+
         $em->remove($work);
         $em->flush();
 

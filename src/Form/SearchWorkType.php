@@ -59,6 +59,7 @@ class SearchWorkType extends AbstractType
 //                'required' => false,
 //            ])
 
+
             ->add('type', EntityType::class, array(
                 'attr' => array('class' => 'form-control'),
                 'class' => Type::class,
@@ -70,6 +71,9 @@ class SearchWorkType extends AbstractType
                     },
 
             ))
+            ->add('keyword', TextType::class,
+                array('attr' => array('class' => 'form-control'),
+                    'required' => false))
 
 
 

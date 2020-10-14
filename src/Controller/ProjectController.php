@@ -23,14 +23,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProjectController extends Controller{
     /**
-     * @Route("/works/{type}", name="work_list")
+     * @Route("/works/{type}/{keyword}", name="work_list")
      * @Method("GET")
      */
-    public function index(Request $request, $type = null)
+    public function index(Request $request, $type = null, $keyword = null)
     {
 
 
-        $works = $this->getDoctrine()->getRepository(Work::class)->workSubmitted($type);
+        $works = $this->getDoctrine()->getRepository(Work::class)->workSubmitted($type, $keyword);
 
         $form = $this->createForm(SearchWorkType::class, $works);
 
@@ -41,8 +41,9 @@ class ProjectController extends Controller{
         if($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $type = $data['type'];
+            $keyword = $data['keyword'];
 
-            return $this->redirectToRoute('work_list', array('type' => $type) );
+            return $this->redirectToRoute('work_list', array('type' => $type, 'keyword' => $keyword) );
         }
         else {
             $typename = '';
@@ -52,6 +53,7 @@ class ProjectController extends Controller{
             'form' => $form->createView(),
             'works' => $works,
             'type' => $type,
+            'keyword' => $keyword
 
 
         ));

@@ -25,7 +25,7 @@ class WorkRepository extends ServiceEntityRepository
         return $this->findBy(array(), array('title' => 'ASC'));
     }
 
-    public function workSubmitted($type)
+    public function workSubmitted($type, $keyword)
     {
         $em = $this->getEntityManager();
 
@@ -41,6 +41,12 @@ class WorkRepository extends ServiceEntityRepository
         else {
             $condition = "1=1";
         }
+        if (isset($keyword)) {
+            $condition2= "w.title like ?2";
+        }
+        else {
+            $condition2= "1=1";
+        }
 
         $works = $em->createQuery(
             "select w
@@ -48,12 +54,16 @@ class WorkRepository extends ServiceEntityRepository
             JOIN w.type t
             WHERE w.date_submitted IS NOT NULL
             AND $condition
+            AND $condition2
 
             ORDER BY w.title asc
             "
         );
         if (isset($type)  && $type != 'All') {
             $works->setParameter(1, $type);
+        }
+        if (isset($keyword)) {
+            $works->setParameter(2, '%'.$keyword.'%');
         }
 
         return $works->execute();

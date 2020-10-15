@@ -23,7 +23,8 @@
         </div>
         <div class="col-lg-4">
             {{ form_label(form.subjects) }}
-            <span style="float:right;"><a href="/subject/new" target="_blank">Add new subject</a></span>
+            {#<span style="float:right;"><a href="/subject/new" target="_blank">Add new subject</a></span>#}
+            <a class="" style="float:right;" data-toggle="modal"  data-target="#subjectModal">Add new subject</a></li>
             {{ form_widget(form.subjects) }}
 
         </div>
@@ -32,5 +33,20 @@
 
     <hr>
     <a href="/clients">Back to client menu</a>
+
+    <div class="modal hide fade" id="subjectModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    {{ render(controller('App\\Controller\\SubjectController::newSubject2', {'id': id})) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+
+
 {% endblock %}
 

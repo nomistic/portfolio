@@ -1,0 +1,12 @@
+
+
+
+{% block body %}
+
+    {{ form_start(form, {'action' : path('new_subject2', {'id': id} )}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+
+{% endblock %}
+

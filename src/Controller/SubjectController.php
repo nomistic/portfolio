@@ -61,6 +61,32 @@ class SubjectController extends Controller{
         );
 
     }
+    /**
+     * @Route("/subject/new2/{id}", name="new_subject2")
+     * @Method({"GET", "POST"})
+     */
+    public function newSubject2(Request $request, $id)
+    {
+        $subject = new Subject();
+        $form = $this->createForm(NewSubjectType::class, $subject);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $subject = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($subject);
+            $em->flush();
+
+            return $this->redirectToRoute('edit_work', array('id' => $id));
+        }
+
+        return $this->render('subjects/new2.html.twig', array(
+                'form' => $form->createView(),
+                'id' => $id
+            )
+        );
+
+    }
 
     /**
      * @Route("/subject/edit/{id}", name="edit_subject")

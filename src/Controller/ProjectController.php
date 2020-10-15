@@ -195,7 +195,8 @@ class ProjectController extends Controller{
         }
 
         return $this->render('works/edit.html.twig', array(
-                'form' => $form->createView())
+                'form' => $form->createView(),
+                'id' => $id)
         );
 
     }

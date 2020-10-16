@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Subject;
 use App\Repository\WorkRepository;
 use App\Form\NewWorkType;
 use App\Form\EditWorkType;
@@ -91,6 +92,7 @@ class DashboardController extends Controller{
         $last12 = $this->getDoctrine()->getRepository(Work::class)->last12();
         $prev12 = $this->getDoctrine()->getRepository(Work::class)->prev12();
         $recentClients = $this->getDoctrine()->getRepository(Client::class)->recentClients();
+        $subjects = $this->getDoctrine()->getRepository(Subject::class)->subjectCount();
 
         $yearly = [];
         $yearly_sum = [];
@@ -142,7 +144,8 @@ class DashboardController extends Controller{
             'recent_clients' => $recentClients,
             'types' => $types,
             'type_list' => $type_list,
-            'type_count' => $type_count
+            'type_count' => $type_count,
+            'subjects' => $subjects
         ));
 
 

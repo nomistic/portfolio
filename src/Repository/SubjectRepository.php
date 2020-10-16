@@ -39,6 +39,22 @@ class SubjectRepository extends ServiceEntityRepository
 
     }
 
+    public function subjectCount() {
+        $em = $this->getEntityManager();
+
+        $works = $em->createQuery(
+            'SELECT w.id, s.id as subject_id, s.name, count(w.id) as total 
+            FROM App\Entity\Work w
+            JOIN w.subjects s
+            GROUP BY s.id
+            ORDER BY total DESC 
+            '
+        );
+
+        return $works->execute();
+
+    }
+
     // /**
     //  * @return Subject[] Returns an array of Subject objects
     //  */
